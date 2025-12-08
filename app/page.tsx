@@ -1,9 +1,16 @@
-
+import React from "react";
+import Hero from "./components/sections/Hero";
+import Features from "./components/sections/Features";
+import CTA from "./components/sections/CTA";
+import HowItWorks from "./components/sections/HowItWorks";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <p>This is the home page</p>
+    <div className="">
+      <Hero />
+      <Features />
+      <HowItWorks />
+      <CTA />
     </div>
   );
 }
