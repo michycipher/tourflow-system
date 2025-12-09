@@ -37,10 +37,10 @@ export const Navbar = () => {
                         <Link
                             key={link.path}
                             href={link.path}
-                            className={`text-sm md:text-base font-medium transition-colors hover:text-primary ${
+                            className={`text-sm md:text-base font-medium  transition-colors hover:text-[#800080]/75 ${
                                 pathname === link.path
-                                    ? "text-primary"
-                                    : "text-muted-foreground"
+                                    ? "text-[#800080]"
+                                    : "text-white/75"
                             }`}
                         >
                             {link.label}

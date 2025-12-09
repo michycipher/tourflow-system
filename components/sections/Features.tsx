@@ -78,9 +78,10 @@ const Features: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className="group p-6 rounded-2xl bg-[#0A101D]/80 border border-[#800080]/10 hover:border-[#800080]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#800080]/5"
+                            className="group p-6 rounded-2xl bg-[#0A0F17]/95 border border-[#800080] hover:border-[#800080]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#800080]/5"
                         >
-                            <div className="w-12 h-12 rounded-xl bg-[#800080]/20 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                            <div className="w-12 h-12 rounded-xl bg-[#800080]/20 flex items-center justify-center mb-4 
+                            group-hover:bg-[#800080]/40 transition-colors">
                                 <feature.icon className="w-6 h-6 text-[#800080]" />
                             </div>
                             <h3 className="font-display font-semibold text-lg mb-2">
