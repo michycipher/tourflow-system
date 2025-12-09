@@ -17,9 +17,8 @@ const Hero = () => {
             {/* Hero Section */}
             <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden mt-20 w-full ">
                 {/* Background Effects */}
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(222_47%_12%)_0%,hsl(222_47%_6%)_70%)]" />
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#800080]/20 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#800080]/50 rounded-full blur-3xl" />
+                <div className="absolute inset-0 bg-[#0A101D]" />
+                
 
                 <div className="container mx-auto relative z-10 text-white my-10 mt-20">
                     <motion.div
@@ -68,11 +67,11 @@ const Hero = () => {
                         className="mt-20 relative"
                     >
                         <div className="max-w-3xl mx-auto bg-[#0A101D]/80 border border-border rounded-2xl shadow-2xl overflow-hidden">
-                            <div className="flex items-center gap-2 px-4 py-3 bg-secondary/50 border-b border-border">
+                            <div className="flex items-center gap-2 px-4 py-3 bg-secondary/40 border-b border-border">
                                 <div className="w-3 h-3 rounded-full bg-red-500/50" />
                                 <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                                 <div className="w-3 h-3 rounded-full bg-green-500/50" />
-                                <span className="ml-4 text-sm text-muted-foreground">
+                                <span className="ml-4 text-sm text-white">
                                     yourwebsite.com
                                 </span>
                             </div>
@@ -84,7 +83,7 @@ const Hero = () => {
                                     >
                                         <HiOutlineSparkles className="w-8 h-8 text-white" />
                                     </div>
-                                    <p className="text-muted-foreground">
+                                    <p className="text-white">
                                         Your website content here
                                     </p>
                                 </div>
@@ -99,7 +98,7 @@ const Hero = () => {
                                 repeat: Infinity,
                                 ease: "easeInOut",
                             }}
-                            className="absolute -bottom-4 -right-4 md:right-8 bg-[#0A101D]/80 border border-border rounded-xl p-4 shadow-xl max-w-xs"
+                            className="absolute -bottom-4 -right-4 md:right-20 lg:right-32 bg-[#0A101D] border border-border rounded-xl p-4 shadow-xl max-w-xs"
                         >
                             <div className="flex items-center gap-3 mb-2  z-10">
                                 <div className="w-8 h-8 rounded-full bg-[#800080]/50 flex items-center justify-center">
@@ -119,11 +118,7 @@ const Hero = () => {
                 </div>
             </section>
 
-            {/* Features Section */}
-
-            {/* How It Works */}
-
-            {/* CTA Section */}
+            
         </div>
     );
 };
