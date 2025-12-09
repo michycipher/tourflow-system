@@ -21,8 +21,6 @@ export default function DashboardLayout({
                             A
                         </div>
                     </div>
-
-                    {/* This is where child pages render (like Outlet) */}
                     <main className="flex-1 overflow-auto">{children}</main>
                 </div>
             </div>
