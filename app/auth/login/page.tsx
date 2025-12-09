@@ -4,18 +4,20 @@ import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { toast } from 'sonner'
+import { useAuthStore } from '@/lib/store/authStore'
+import { ArrowLeftIcon } from 'lucide-react'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
   const router = useRouter()
+  const setUser = useAuthStore((state) => state.setUser)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setError('')
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -23,36 +25,45 @@ export default function LoginPage() {
     })
 
     if (error) {
-      setError(error.message)
+      toast.error('Login failed', {
+        description: error.message,
+      })
       setLoading(false)
     } else {
+      // Update auth store
+      setUser(data.user)
+
+      toast.success('Welcome back!', {
+        description: `Signed in as ${email}`,
+      })
+
       // Successfully logged in
       router.push('/dashboard')
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
-        <div>
-          <h2 className="text-3xl font-bold text-center text-gray-900">
-            Sign in to Dashboard
+    <div className="min-h-screen flex items-center justify-center bg-[#0A0F17] px-4">
+      <div className="max-w-md w-full space-y-8 bg-[#0D131C] p-8 rounded-2xl shadow-xl border border-white/5 backdrop-blur">
+      
+          <Link href='/' className='text-gray-400 icon-hover flex items-center py-2'>
+          <ArrowLeftIcon />
+          <span className='text-gray-400 icon-hover ml-3'>Back to home</span>
+          </Link>
+
+        <div className='py-4'>
+          <h2 className="text-4xl font-bold text-white">
+            Welcome back
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Welcome back! Please enter your credentials
+          <p className="mt-2 text-gray-400">
+            Login to access your dashboard
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-6">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-              {error}
-            </div>
-          )}
-
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-200">
                 Email address
               </label>
               <input
@@ -61,13 +72,13 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-3 py-2 rounded-md bg-[#0A0F17] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-[#800080] focus:border-[#800080]"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-200">
                 Password
               </label>
               <input
@@ -76,7 +87,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-3 py-2 rounded-md bg-[#0A0F17] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-[#800080] focus:border-[#800080]"
                 placeholder="••••••••"
               />
             </div>
@@ -85,14 +96,14 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex justify-center py-3.5 px-4 rounded-md shadow-md text-sm font-medium text-white bg-[#800080] hover:bg-[#9d00a8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#800080] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {loading ? 'Logging in...' : 'Login'}
           </button>
 
           <div className="text-center text-sm">
-            <span className="text-gray-600">Don&#39;t have an account? </span>
-            <Link href="/auth/signup" className="font-medium text-blue-600 hover:text-blue-500">
+            <span className="text-gray-300">Don’t have an account? </span>
+            <Link href="/auth/signup" className="font-medium text-[#800080] hover:text-[#9d00a8]">
               Sign up
             </Link>
           </div>

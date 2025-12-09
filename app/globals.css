@@ -136,3 +136,7 @@
         @apply bg-background text-foreground;
     }
 }
+
+.icon-hover:hover {
+    color: #9d00a8;    /* hover text color */
+}
