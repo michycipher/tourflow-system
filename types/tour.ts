@@ -4,10 +4,10 @@ export interface Tour {
     description: string;
     steps: number;
     status: "Active" | "Inactive";
-    stepDetails: stepDetails[];
+    stepDetails: stepDetail[];
 }
 
-type stepDetails = {
+export type stepDetail = {
     id: number;
     title: string;
     description: string;
