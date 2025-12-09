@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/layouts/NavBar";
+import { Footer } from "@/components/layouts/Footer";
 
 export const metadata: Metadata = {
     title: "Tour Flow",
@@ -15,6 +16,7 @@ export default function MainLayout({
         <>
             <Navbar />
             {children}
+            <Footer />
         </>
     );
 }
