@@ -4,9 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run copy-widget && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "copy-widget": "mkdir -p public/widgets && cp -r ../WIDGET/tourflow-widget/dist/* public/widgets/ || echo 'Widget files not found, skipping'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",
