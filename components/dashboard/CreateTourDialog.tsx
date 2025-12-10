@@ -192,6 +192,7 @@ export default function CreateTourDialog({
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
+
             <DialogTrigger asChild>
                 <Button variant="default" className="text-black font-medium">
                     <Plus className="w-4 h-4 mr-2" />

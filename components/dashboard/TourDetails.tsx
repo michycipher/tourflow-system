@@ -31,7 +31,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
             Step,
             | "id"
             | "tour_id"
-            | "step_number"
+            | "step_order"
             | "completion_rate"
             | "created_at"
             | "updated_at"
@@ -69,7 +69,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
             Step,
             | "id"
             | "tour_id"
-            | "step_number"
+            | "step_order"
             | "completion_rate"
             | "created_at"
             | "updated_at"
@@ -143,7 +143,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
 
     // Get steps array safely
     const steps = (selectedTour.tour_steps || []).sort(
-        (a, b) => a.step_number - b.step_number
+        (a, b) => a.step_order - b.step_order
     );
 
     return (
@@ -184,8 +184,10 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                                     >
                                         <GripVertical className="w-4 h-4" />
                                     </Button>
-                                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-semibold shrink-0 mt-0.5">
-                                        {step.step_number}
+                                    <div className="flex items-center justify-center p-8 rounded-full bg-primary text-white! font-semibold shrink-0 mt-0.5">
+                                        <p className="text-white">
+                                            {step.step_order}
+                                        </p>
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <h4 className="text-white font-medium mb-1">
@@ -198,12 +200,12 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <EditStepDialog
                                             step={step}
-                                            stepNumber={step.step_number}
+                                            stepNumber={step.step_order}
                                             onEditStep={handleEditStep}
                                         />
                                         <DeleteStepDialog
                                             stepTitle={step.title}
-                                            stepNumber={step.step_number}
+                                            stepNumber={step.step_order}
                                             totalSteps={steps.length}
                                             onDeleteStep={() =>
                                                 handleDeleteStep(step.id)
