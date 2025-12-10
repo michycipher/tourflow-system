@@ -43,7 +43,7 @@ const TourCard = ({
                 <div className="flex items-start justify-between">
                     <div className="flex-1">
                         <CardTitle className="text-white text-lg mb-1">
-                            {tour.name}
+                            {tour.title}
                         </CardTitle>
                         <CardDescription className="text-gray-400 text-sm">
                             {tour.description}
@@ -78,11 +78,11 @@ const TourCard = ({
             </CardHeader>
             <CardContent className="pt-0">
                 <div className="flex items-center gap-2 text-sm">
-                    <span className="text-gray-400">{tour.steps} steps</span>
+                    <span className="text-gray-400">{tour.total_steps} steps</span>
                     <Badge
                         variant="outline"
                         className={`${
-                            tour.status === "Active"
+                            tour.status === "active"
                                 ? "bg-green-500/10 text-green-500 border-green-500/20"
                                 : "bg-gray-500/10 text-gray-400 border-gray-500/20"
                         }`}

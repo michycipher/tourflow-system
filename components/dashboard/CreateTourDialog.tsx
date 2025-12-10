@@ -22,24 +22,32 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tour, stepDetail } from "@/types/tour";
 import { toast } from "sonner";
+import { createTour } from "@/lib/supabase";
+
+interface StepInput {
+    title: string;
+    description: string;
+    target_element?: string;
+}
 
 interface CreateTourDialogProps {
-    onCreateTour: (tour: Omit<Tour, "id">) => void;
+    userId: string;
+    onTourCreated: () => void; // Callback to refresh tours list
 }
 
 export default function CreateTourDialog({
-    onCreateTour,
+    userId,
+    onTourCreated,
 }: CreateTourDialogProps) {
     const [open, setOpen] = useState(false);
     const [tourName, setTourName] = useState("");
     const [tourDescription, setTourDescription] = useState("");
-    const [tourStatus, setTourStatus] = useState<"Active" | "Inactive">(
-        "Active"
+    const [tourStatus, setTourStatus] = useState<"active" | "inactive">(
+        "inactive"
     );
-    const [steps, setSteps] = useState<Omit<stepDetail, "id">[]>([
-        { title: "", description: "" },
+    const [steps, setSteps] = useState<StepInput[]>([
+        { title: "", description: "", target_element: "" },
     ]);
     const [errors, setErrors] = useState<{
         tourName?: string;
@@ -49,8 +57,10 @@ export default function CreateTourDialog({
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const addStep = () => {
-        setSteps([...steps, { title: "", description: "" }]);
-        // Clear steps error when user adds a new step
+        setSteps([
+            ...steps,
+            { title: "", description: "", target_element: "" },
+        ]);
         if (errors.steps) {
             setErrors({ ...errors, steps: undefined });
         }
@@ -64,14 +74,13 @@ export default function CreateTourDialog({
 
     const updateStep = (
         index: number,
-        field: "title" | "description",
+        field: keyof StepInput,
         value: string
     ) => {
         const newSteps = [...steps];
         newSteps[index][field] = value;
         setSteps(newSteps);
 
-        // Clear steps error when user starts filling in steps
         if (errors.steps) {
             setErrors({ ...errors, steps: undefined });
         }
@@ -117,23 +126,23 @@ export default function CreateTourDialog({
         try {
             const validSteps = steps
                 .filter((step) => step.title.trim() && step.description.trim())
-                .map((step, index) => ({
-                    id: index + 1,
+                .map((step) => ({
                     title: step.title.trim(),
                     description: step.description.trim(),
+                    target_element: step.target_element?.trim() || undefined,
                 }));
 
-            const newTour: Omit<Tour, "id"> = {
-                name: tourName.trim(),
+            const { data, error } = await createTour(userId, {
+                title: tourName.trim(),
                 description: tourDescription.trim(),
-                steps: validSteps.length,
                 status: tourStatus,
-                stepDetails: validSteps,
-            };
+                steps: validSteps,
+            });
 
-            onCreateTour(newTour);
+            if (error) {
+                throw new Error(error);
+            }
 
-            // Success toast
             toast.success("Tour created successfully!", {
                 description: `"${tourName}" has been added with ${validSteps.length} steps`,
             });
@@ -141,13 +150,18 @@ export default function CreateTourDialog({
             // Reset form
             setTourName("");
             setTourDescription("");
-            setTourStatus("Active");
-            setSteps([{ title: "", description: "" }]);
+            setTourStatus("inactive");
+            setSteps([{ title: "", description: "", target_element: "" }]);
             setErrors({});
             setOpen(false);
-        } catch (error) {
+
+            // Trigger parent refresh
+            onTourCreated();
+        } catch (error: any) {
+            console.error("Error creating tour:", error);
             toast.error("Failed to create tour", {
-                description: "Please try again or contact support",
+                description:
+                    error.message || "Please try again or contact support",
             });
         } finally {
             setIsSubmitting(false);
@@ -155,7 +169,6 @@ export default function CreateTourDialog({
     };
 
     const handleCancel = () => {
-        // Show confirmation if user has entered data
         const hasData =
             tourName.trim() ||
             tourDescription.trim() ||
@@ -170,8 +183,8 @@ export default function CreateTourDialog({
 
         setTourName("");
         setTourDescription("");
-        setTourStatus("Active");
-        setSteps([{ title: "", description: "" }]);
+        setTourStatus("inactive");
+        setSteps([{ title: "", description: "", target_element: "" }]);
         setErrors({});
         setOpen(false);
     };
@@ -267,9 +280,7 @@ export default function CreateTourDialog({
                             id="tour-description"
                             placeholder="Describe what this tour will help users learn..."
                             value={tourDescription}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLTextAreaElement>
-                            ) => {
+                            onChange={(e) => {
                                 setTourDescription(e.target.value);
                                 if (errors.tourDescription) {
                                     setErrors({
@@ -300,7 +311,7 @@ export default function CreateTourDialog({
                         </Label>
                         <Select
                             value={tourStatus}
-                            onValueChange={(value: "Active" | "Inactive") =>
+                            onValueChange={(value: "active" | "inactive") =>
                                 setTourStatus(value)
                             }
                         >
@@ -308,8 +319,8 @@ export default function CreateTourDialog({
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-[#1e2943] border-[#2a3654] text-white">
-                                <SelectItem value="Active">Active</SelectItem>
-                                <SelectItem value="Inactive">
+                                <SelectItem value="active">Active</SelectItem>
+                                <SelectItem value="inactive">
                                     Inactive
                                 </SelectItem>
                             </SelectContent>
@@ -326,7 +337,6 @@ export default function CreateTourDialog({
                                 <div className="text-xs sm:text-sm text-gray-400">
                                     {validStepsCount} / 5 steps completed
                                 </div>
-                                {/* Progress indicator */}
                                 <div className="w-20 sm:w-24 h-2 bg-[#1e2943] rounded-full overflow-hidden">
                                     <div
                                         className={`h-full transition-all duration-300 ${
@@ -388,6 +398,20 @@ export default function CreateTourDialog({
                                                     )
                                                 }
                                                 className="bg-[#0a0e1a] border-[#2a3654] text-white placeholder:text-gray-500 min-h-[60px] text-sm sm:text-base"
+                                            />
+                                            <Input
+                                                placeholder="Target element (optional, e.g., #signup-button)"
+                                                value={
+                                                    step.target_element || ""
+                                                }
+                                                onChange={(e) =>
+                                                    updateStep(
+                                                        index,
+                                                        "target_element",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                className="bg-[#0a0e1a] border-[#2a3654] text-white placeholder:text-gray-500 text-sm sm:text-base"
                                             />
                                         </div>
                                         {steps.length > 1 && (
