@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { HiOutlineMenu } from "react-icons/hi";
-import { HiOutlineX } from "react-icons/hi";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { useState } from "react";
 import { Button } from "../ui/Button";
+import { useAuthStore } from "@/lib/store/authStore";
+import { LogOut } from "lucide-react";
 
 export const Navbar = () => {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { user, loading, signOut } = useAuthStore();
 
     const navLinks = [
         { path: "/", label: "Home" },
@@ -18,13 +20,21 @@ export const Navbar = () => {
         { path: "/docs", label: "Docs" },
     ];
 
+    // Only authenticated if we have a user AND loading is done
+    const isAuthenticated = !loading && !!user;
+
+    const handleSignOut = async () => {
+        await signOut();
+        setIsMenuOpen(false);
+    };
+
     return (
         <motion.header
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             className="fixed top-0 left-0 right-0 z-50 bg-[#0A101D]/95 text-white"
         >
-            <nav className="container mx-auto h-20 flex items-center justify-between">
+            <nav className="container mx-auto px-4 sm:px-18 h-20 flex items-center justify-between w-full max-w-[1440px]">
                 <Link href="/" className="flex items-center gap-2">
                     <span className="font-display font-bold text-xl md:text-2xl">
                         TourFlow
@@ -37,7 +47,7 @@ export const Navbar = () => {
                         <Link
                             key={link.path}
                             href={link.path}
-                            className={`text-sm md:text-base font-medium  transition-colors hover:text-[#800080]/75 ${
+                            className={`text-sm md:text-base font-medium transition-colors hover:text-[#800080]/75 ${
                                 pathname === link.path
                                     ? "text-[#800080]"
                                     : "text-white/75"
@@ -48,24 +58,48 @@ export const Navbar = () => {
                     ))}
                 </div>
 
+                {/* Desktop Auth Buttons */}
                 <div className="hidden md:flex items-center gap-4">
-                    <Link href="/auth/login">
-                        <Button
-                            className="cursor-pointer bg-transparent border border-[#800080]
-            text-white p-2"
-                            size="sm"
-                        >
-                            Login
-                        </Button>
-                    </Link>
-                    <Link href="/auth/signup">
-                        <Button
-                            className="cursor-pointer bg-[#800080] text-white p-2"
-                            size="sm"
-                        >
-                            Get Started
-                        </Button>
-                    </Link>
+                    {isAuthenticated ? (
+                        <>
+                            <Link href="/dashboard">
+                                <Button
+                                    className="cursor-pointer bg-[#800080] text-white p-2"
+                                    size="sm"
+                                >
+                                    Dashboard
+                                </Button>
+                            </Link>
+                            <Button
+                                onClick={handleSignOut}
+                                className="cursor-pointer bg-transparent border border-red-500 text-red-500 p-2 flex items-center gap-2"
+                                size="sm"
+                            >
+                                <LogOut className="w-4 h-4" />
+                                Logout
+                            </Button>
+                        </>
+                    ) : (
+                        // DEFAULT: ALWAYS Show Login + Get Started
+                        <>
+                            <Link href="/auth/login">
+                                <Button
+                                    className="cursor-pointer bg-transparent border border-[#800080] text-white p-2"
+                                    size="sm"
+                                >
+                                    Login
+                                </Button>
+                            </Link>
+                            <Link href="/auth/signup">
+                                <Button
+                                    className="cursor-pointer bg-[#800080] text-white p-2"
+                                    size="sm"
+                                >
+                                    Get Started
+                                </Button>
+                            </Link>
+                        </>
+                    )}
                 </div>
 
                 {/* Mobile Menu Toggle */}
@@ -88,50 +122,218 @@ export const Navbar = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="md:hidden glass border-b border-border/50"
+                    className="md:hidden"
                 >
-                    <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+                    <div className="container bg-[#0A101D]/95 mx-auto px-4 py-4 flex flex-col gap-4">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
                                 href={link.path}
                                 onClick={() => setIsMenuOpen(false)}
-                                className={`text-sm font-medium transition-colors hover:text-primary ${
+                                className={`text-sm md:text-base font-medium transition-colors hover:text-[#800080]/75 ${
                                     pathname === link.path
-                                        ? "text-primary"
-                                        : "text-muted-foreground"
+                                        ? "text-[#800080]"
+                                        : "text-white/75"
                                 }`}
                             >
                                 {link.label}
                             </Link>
                         ))}
-                        <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                            <Link
-                                href="/auth/login"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
+
+                        {isAuthenticated ? (
+                            // LOGGED IN: Show Dashboard + Logout
+                            <div className="flex flex-col w-full gap-2 pt-4">
+                                <Link
+                                    href="/dashboard"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <Button
+                                        className="w-full cursor-pointer bg-[#800080] text-white p-2"
+                                        size="sm"
+                                    >
+                                        Dashboard
+                                    </Button>
+                                </Link>
                                 <Button
-                                    className="w-full justify-start cursor-pointer bg-white border text-[#800080] p-2"
+                                    onClick={handleSignOut}
+                                    className="w-full cursor-pointer bg-transparent border border-red-500 text-red-500 p-2 flex items-center justify-center gap-2"
                                     size="sm"
                                 >
-                                    Login
+                                    <LogOut className="w-4 h-4" />
+                                    Logout
                                 </Button>
-                            </Link>
-                            <Link
-                                href="/auth/signup"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                <Button
-                                    className="w-full cursor-pointer bg-[#800080]/60 text-white p-2"
-                                    size="sm"
+                            </div>
+                        ) : (
+                            // DEFAULT: ALWAYS Show Login + Get Started
+                            <div className="flex w-full gap-2 pt-4">
+                                <Link
+                                    href="/auth/login"
+                                    onClick={() => setIsMenuOpen(false)}
                                 >
-                                    Get Started
-                                </Button>
-                            </Link>
-                        </div>
+                                    <Button
+                                        className="w-full justify-start cursor-pointer bg-white border text-[#800080] p-2"
+                                        size="sm"
+                                    >
+                                        Login
+                                    </Button>
+                                </Link>
+                                <Link
+                                    href="/auth/signup"
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <Button
+                                        className="w-full cursor-pointer bg-[#800080]/60 text-white p-2"
+                                        size="sm"
+                                    >
+                                        Get Started
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 </motion.div>
             )}
         </motion.header>
     );
 };
+
+
+
+// "use client";
+
+// import Link from "next/link";
+// import { usePathname } from "next/navigation";
+// import { motion } from "framer-motion";
+// import { HiOutlineMenu } from "react-icons/hi";
+// import { HiOutlineX } from "react-icons/hi";
+// import { useState } from "react";
+// import { Button } from "../ui/Button";
+
+// export const Navbar = () => {
+//     const pathname = usePathname();
+//     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+//     const navLinks = [
+//         { path: "/", label: "Home" },
+//         { path: "/about", label: "About" },
+//         { path: "/docs", label: "Docs" },
+//     ];
+
+//     return (
+//         <motion.header
+//             initial={{ y: -100 }}
+//             animate={{ y: 0 }}
+//             className="fixed top-0 left-0 right-0 z-50 bg-[#0A101D]/95 text-white"
+//         >
+//             <nav className="container mx-auto px-4 sm:px-18 h-20 flex items-center justify-between w-full max-w-[1440px]">
+//                 <Link href="/" className="flex items-center gap-2">
+//                     <span className="font-display font-bold text-xl md:text-2xl">
+//                         TourFlow
+//                     </span>
+//                 </Link>
+
+//                 {/* Desktop Navigation */}
+//                 <div className="hidden md:flex items-center gap-8">
+//                     {navLinks.map((link) => (
+//                         <Link
+//                             key={link.path}
+//                             href={link.path}
+//                             className={`text-sm md:text-base font-medium  transition-colors hover:text-[#800080]/75 ${
+//                                 pathname === link.path
+//                                     ? "text-[#800080]"
+//                                     : "text-white/75"
+//                             }`}
+//                         >
+//                             {link.label}
+//                         </Link>
+//                     ))}
+//                 </div>
+
+//                 <div className="hidden md:flex items-center gap-4">
+//                     <Link href="/auth/login">
+//                         <Button
+//                             className="cursor-pointer bg-transparent border border-[#800080]
+//             text-white p-2"
+//                             size="sm"
+//                         >
+//                             Login
+//                         </Button>
+//                     </Link>
+//                     <Link href="/auth/signup">
+//                         <Button
+//                             className="cursor-pointer bg-[#800080] text-white p-2"
+//                             size="sm"
+//                         >
+//                             Get Started
+//                         </Button>
+//                     </Link>
+//                 </div>
+
+//                 {/* Mobile Menu Toggle */}
+//                 <button
+//                     className="md:hidden p-2"
+//                     onClick={() => setIsMenuOpen(!isMenuOpen)}
+//                     aria-label="Toggle menu"
+//                 >
+//                     {isMenuOpen ? (
+//                         <HiOutlineX className="w-6 h-6" />
+//                     ) : (
+//                         <HiOutlineMenu className="w-6 h-6" />
+//                     )}
+//                 </button>
+//             </nav>
+
+//             {/* Mobile Menu */}
+//             {isMenuOpen && (
+//                 <motion.div
+//                     initial={{ opacity: 0, height: 0 }}
+//                     animate={{ opacity: 1, height: "auto" }}
+//                     exit={{ opacity: 0, height: 0 }}
+//                     className="md:hidden"
+//                 >
+//                     <div className="container bg-[#0A101D]/95 mx-auto px-4 py-4 flex flex-col gap-4">
+//                         {navLinks.map((link) => (
+//                             <Link
+//                                 key={link.path}
+//                                 href={link.path}
+//                                 onClick={() => setIsMenuOpen(false)}
+//                                 className={`text-sm md:text-base font-medium  transition-colors hover:text-[#800080]/75 ${
+//                                 pathname === link.path
+//                                     ? "text-[#800080]"
+//                                     : "text-white/75"
+//                             }`}
+//                         >
+//                                 {link.label}
+//                             </Link>
+//                         ))}
+//                         <div className="flex w-full gap-2 pt-4">
+//                             <Link
+//                                 href="/auth/login"
+//                                 onClick={() => setIsMenuOpen(false)}
+//                             >
+//                                 <Button
+//                                     className="w-full justify-start cursor-pointer bg-white border text-[#800080] p-2"
+//                                     size="sm"
+//                                 >
+//                                     Login
+//                                 </Button>
+//                             </Link>
+//                             <Link
+//                                 href="/auth/signup"
+//                                 onClick={() => setIsMenuOpen(false)}
+//                             >
+//                                 <Button
+//                                     className="w-full cursor-pointer bg-[#800080]/60 text-white p-2"
+//                                     size="sm"
+//                                 >
+//                                     Get Started
+//                                 </Button>
+//                             </Link>
+//                         </div>
+//                     </div>
+//                 </motion.div>
+//             )}
+//         </motion.header>
+//     );
+// };
+
