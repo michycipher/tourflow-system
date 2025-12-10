@@ -261,9 +261,9 @@ export default function DashboardPage() {
                     ) : stepPerformance.length > 0 ? (
                         <div className="space-y-6">
                             {stepPerformance.map((step) => (
-                                <div key={step.step_number}>
+                                <div key={step.step_order}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-slate-300 text-sm">Step {step.step_number}</span>
+                                        <span className="text-slate-300 text-sm">Step {step.step_order}</span>
                                         <span className="text-slate-300 text-sm font-medium">
                                             {step.completion_rate.toFixed(0)}%
                                         </span>
@@ -555,9 +555,9 @@ export default function DashboardPage() {
 //                     ) : stepPerformance.length > 0 ? (
 //                         <div className="space-y-6">
 //                             {stepPerformance.map((step) => (
-//                                 <div key={step.step_number}>
+//                                 <div key={step.step_order}>
 //                                     <div className="flex items-center justify-between mb-2">
-//                                         <span className="text-slate-300 text-sm">Step {step.step_number}</span>
+//                                         <span className="text-slate-300 text-sm">Step {step.step_order}</span>
 //                                         <span className="text-slate-300 text-sm font-medium">
 //                                             {step.completion_rate.toFixed(0)}%
 //                                         </span>

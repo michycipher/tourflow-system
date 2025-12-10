@@ -25,14 +25,24 @@ import { Button } from "@/components/ui/SidebarBtn";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { stepDetail } from "@/types/tour";
+import { Step } from "@/types/tour";
 import { toast } from "sonner";
 
 // ============================================
 // ADD STEP DIALOG
 // ============================================
-interface AddStepDialogProps {
-    onAddStep: (step: Omit<stepDetail, "id">) => void;
+export interface AddStepDialogProps {
+    onAddStep: (
+        step: Omit<
+            Step,
+            | "id"
+            | "tour_id"
+            | "step_order"
+            | "completion_rate"
+            | "created_at"
+            | "updated_at"
+        >
+    ) => void;
 }
 
 export function AddStepDialog({ onAddStep }: AddStepDialogProps) {
@@ -104,7 +114,7 @@ export function AddStepDialog({ onAddStep }: AddStepDialogProps) {
                 </Button>
             </DialogTrigger>
             <DialogContent
-                className="bg-[#151b2e] border-[#1e2943] text-white max-w-[95vw] sm:max-w-lg"
+                className="bg-sidebar border-[#1e2943] text-white max-w-[95vw] sm:max-w-lg"
                 onEscapeKeyDown={(e) => {
                     const hasData = title.trim() || description.trim();
                     if (hasData) {
@@ -189,10 +199,10 @@ export function AddStepDialog({ onAddStep }: AddStepDialogProps) {
                     </div>
                 </div>
 
-                <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
+                <DialogFooter className="flex-col sm:flex-row gap-2! sm:gap-0">
                     <Button
                         type="button"
-                        variant="outline"
+                        variant="cancel"
                         onClick={handleCancel}
                         className="border-[#2a3654] text-gray-400 hover:bg-[#1e2943] hover:text-white w-full sm:w-auto"
                     >
@@ -215,9 +225,9 @@ export function AddStepDialog({ onAddStep }: AddStepDialogProps) {
 // EDIT STEP DIALOG
 // ============================================
 interface EditStepDialogProps {
-    step: stepDetail;
+    step: Step;
     stepNumber: number;
-    onEditStep: (stepId: number, updatedStep: Omit<stepDetail, "id">) => void;
+    onEditStep: (stepId: number, updatedStep: Omit<Step, "id">) => void;
 }
 
 export function EditStepDialog({
@@ -261,7 +271,8 @@ export function EditStepDialog({
         }
 
         onEditStep(step.id, {
-            title: title.trim(),
+            ...step, // ← Spread first (gets all existing properties)
+            title: title.trim(), // ← Then override with new values
             description: description.trim(),
         });
 
@@ -283,13 +294,13 @@ export function EditStepDialog({
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="h-8 w-8 text-gray-400 hover:text-white"
+                    className="h-8 w-8 text-gray-400  cursor-pointer"
                 >
                     <Pencil className="w-4 h-4" />
                 </Button>
             </DialogTrigger>
             <DialogContent
-                className="bg-[#151b2e] border-[#1e2943] text-white max-w-[95vw] sm:max-w-lg"
+                className="bg-sidebar border-primary/60 text-white max-w-[95vw] sm:max-w-lg"
                 onEscapeKeyDown={(e) => {
                     e.preventDefault();
                     handleCancel();
@@ -366,12 +377,11 @@ export function EditStepDialog({
                     </div>
                 </div>
 
-                <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
+                <DialogFooter className="flex-col sm:flex-row gap-4! bg-sidebar! sm:gap-0">
                     <Button
                         type="button"
-                        variant="outline"
+                        variant="cancel"
                         onClick={handleCancel}
-                        className="border-[#2a3654] text-gray-400 hover:bg-[#1e2943] hover:text-white w-full sm:w-auto"
                     >
                         Cancel
                     </Button>

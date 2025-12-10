@@ -1,13 +1,12 @@
 {
-  "name": "tour-flow",
+  "name": "tourflow-system",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run copy-widget && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "copy-widget": "mkdir -p public/widgets && cp -r ../WIDGET/tourflow-widget/dist/* public/widgets/ || echo 'Widget files not found, skipping'"
+    "lint": "eslint ."
   },
   "engines": {
     "node": ">=18.0.0"

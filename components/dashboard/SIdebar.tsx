@@ -112,7 +112,7 @@ export default function TourFlowSidebar() {
                                     isActive={isActive}
                                     className={`w-full justify-start gap-3 py-6 px-3 text-sm ${
                                         isActive
-                                            ? "bg-sidebar-primary text-[#800080]"
+                                            ? "bg-primary! text-white!"
                                             : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
                                     }`}
                                 >
