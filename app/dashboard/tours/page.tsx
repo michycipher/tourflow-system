@@ -131,6 +131,11 @@ export default function TourManagement() {
         setSelectedTour(tourWithId);
     };
 
+    const handleUpdateTour = (updatedTour: Tour) => {
+        setTours(tours.map((t) => (t.id === updatedTour.id ? updatedTour : t)));
+        setSelectedTour(updatedTour);
+    };
+
     return (
         // <div className="min-h-screen bg-[#0a0e1a] text-white p-4 md:p-6 lg:p-8">
         <div className="mx-auto text-white">
@@ -172,7 +177,10 @@ export default function TourManagement() {
                             </CardContent>
                         </Card>
                     ) : (
-                        <TourDetails selectedTour={selectedTour} />
+                        <TourDetails
+                            selectedTour={selectedTour}
+                            onUpdateTour={handleUpdateTour}
+                        />
                     )}
                 </div>
             </div>
