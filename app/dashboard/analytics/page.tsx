@@ -37,8 +37,8 @@ const stepPerformanceData = [
 
 // Tour status data (for pie chart)
 const tourStatusData = [
-    { name: "Active", value: 2, color: "#9d00a8" },
-    { name: "Inactive", value: 1, color: "#334155" },
+    { name: "active", value: 2, color: "#9d00a8" },
+    { name: "inactive", value: 1, color: "#334155" },
 ];
 
 // Step skip rates data
