@@ -26,7 +26,7 @@ const menuItems = [
     { icon: Map, label: "Tours", href: "/dashboard/tours" },
     { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
     { icon: Code, label: "Embed Code", href: "/dashboard/embed" },
-    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+    // { icon: Settings, label: "Settings", href: "/dashboard/settings" },
 ];
 
 export default function TourFlowSidebar() {
@@ -91,9 +91,11 @@ export default function TourFlowSidebar() {
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#800080]">
                         <Map className="h-5 w-5 text-white" />
                     </div>
+                    <Link href='/'>
                     <span className="text-lg font-semibold text-white">
                         TourFlow
                     </span>
+                    </Link>
                 </div>
             </SidebarHeader>
 
