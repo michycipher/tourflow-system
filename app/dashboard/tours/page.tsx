@@ -32,8 +32,20 @@ export default function TourManagement() {
 
     // Load tours when component mounts or user changes
     useEffect(() => {
+    console.log("👤 Current user ID:", user?.id);
+    console.log("📋 Loaded tours:", tours);
+    
+    if (tours.length > 0) {
+        tours.forEach(tour => {
+            console.log(`🎯 Tour: "${tour.title}" - ID: ${tour.id}`);
+            console.log(`   Steps count: ${tour.tour_steps?.length || 0}`);
+        });
+    }
+}, [tours, user]); 
+    useEffect(() => {
         if (user?.id) {
             loadTours();
+            
         }
     }, [user?.id]);
 
