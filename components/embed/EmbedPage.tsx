@@ -41,7 +41,6 @@ export default function EmbedPage() {
 
       <div className="max-w-4xl mx-auto px-2 sm:px-4">
 
-        {/* Header */}
         <div className="mb-8 sm:mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Embed Code</h1>
           <p className="text-slate-400 text-sm sm:text-base">
@@ -50,7 +49,6 @@ export default function EmbedPage() {
           <div className="h-px bg-slate-800 mt-4 sm:mt-6"></div>
         </div>
 
-        {/* NPM Notice */}
         <div className="mb-6 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
           <div className="flex flex-col sm:flex-row items-start gap-3">
             <ExternalLink className="w-5 h-5 text-blue-400 mt-1 flex-shrink-0" />
@@ -69,14 +67,12 @@ export default function EmbedPage() {
           </div>
         </div>
 
-        {/* Tour Selector */}
         <TourSelector
           tours={tours}
           selectedTour={selectedTour}
           onSelectTour={handleSelectTour}
         />
 
-        {/* Live Preview */}
         <div className="mb-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
             <h2 className="text-lg sm:text-xl font-semibold text-white">Live Preview</h2>
@@ -111,11 +107,9 @@ export default function EmbedPage() {
           </div>
         </div>
 
-        {/* Installation Methods */}
         <div className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Installation Methods</h2>
 
-          {/* Method 1 */}
           <div className="mb-6">
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <h3 className="text-base sm:text-lg font-medium text-white">
@@ -131,7 +125,6 @@ export default function EmbedPage() {
             </div>
           </div>
 
-          {/* Method 2 */}
           <div className="mb-6">
             <h3 className="text-base sm:text-lg font-medium text-white mb-2">Method 2: Next.js Script Component</h3>
             <p className="text-slate-400 text-sm mb-3">Optimized for Next.js apps.</p>
@@ -140,7 +133,6 @@ export default function EmbedPage() {
             </div>
           </div>
 
-          {/* Method 3 */}
           <div className="mb-6">
             <h3 className="text-base sm:text-lg font-medium text-white mb-2">Method 3: React Component Wrapper</h3>
             <p className="text-slate-400 text-sm mb-3">Reusable React wrapper.</p>
@@ -152,7 +144,6 @@ export default function EmbedPage() {
 
         <InstallationGuide />
 
-        {/* Configuration */}
         <div className="mt-10 bg-slate-900 rounded-lg p-4 sm:p-6 border border-slate-800">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Configuration Options</h2>
           <div className="space-y-3 text-sm">
@@ -175,7 +166,6 @@ export default function EmbedPage() {
           </div>
         </div>
 
-        {/* CDN Links */}
         <div className="mt-10 bg-slate-900 rounded-lg p-4 sm:p-6 border border-slate-800">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">CDN Links</h2>
           <div className="font-mono text-sm space-y-3 break-all">
