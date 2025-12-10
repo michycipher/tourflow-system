@@ -26,7 +26,7 @@ const menuItems = [
     { icon: Map, label: "Tours", href: "/dashboard/tours" },
     { icon: BarChart3, label: "Analytics", href: "/dashboard/analytics" },
     { icon: Code, label: "Embed Code", href: "/dashboard/embed" },
-    { icon: Settings, label: "Settings", href: "/dashboard/settings" },
+    // { icon: Settings, label: "Settings", href: "/dashboard/settings" },
 ];
 
 export default function TourFlowSidebar() {
