@@ -1,5 +1,5 @@
 "use client";
-import { Tour, stepDetail } from "@/types/tour";
+import { Tour, Step } from "@/types/tour"; // Import from the correct location
 import {
     Card,
     CardTitle,
@@ -14,6 +14,8 @@ import {
     EditStepDialog,
     DeleteStepDialog,
 } from "@/components/dashboard/StepDialogs";
+import { addStepToTour, updateStep, deleteStep } from "@/lib/supabase";
+import { toast } from "sonner";
 
 interface TourDetailsProps {
     selectedTour: Tour;
@@ -21,61 +23,136 @@ interface TourDetailsProps {
 }
 
 const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
-    const handleAddStep = (newStep: Omit<stepDetail, "id">) => {
-        const newStepWithId: stepDetail = {
-            id:
-                selectedTour.stepDetails.length > 0
-                    ? Math.max(...selectedTour.stepDetails.map((s) => s.id)) + 1
-                    : 1,
-            ...newStep,
-        };
+    // Get user_id from the tour (since it's already loaded)
+    const userId = selectedTour.user_id;
 
-        const updatedTour: Tour = {
-            ...selectedTour,
-            stepDetails: [...selectedTour.stepDetails, newStepWithId],
-            steps: selectedTour.stepDetails.length + 1,
-        };
-
-        onUpdateTour(updatedTour);
-    };
-
-    const handleEditStep = (
-        stepId: number,
-        updatedStep: Omit<stepDetail, "id">
+    const handleAddStep = async (
+        newStep: Omit<
+            Step,
+            | "id"
+            | "tour_id"
+            | "step_number"
+            | "completion_rate"
+            | "created_at"
+            | "updated_at"
+        >
     ) => {
-        const updatedSteps = selectedTour.stepDetails.map((step) =>
-            step.id === stepId ? { ...step, ...updatedStep } : step
-        );
+        const { data, error } = await addStepToTour(selectedTour.id, userId, {
+            title: newStep.title,
+            description: newStep.description,
+        });
 
-        const updatedTour: Tour = {
-            ...selectedTour,
-            stepDetails: updatedSteps,
-        };
+        if (error) {
+            toast.error("Failed to add step", {
+                description: error,
+            });
+            return;
+        }
 
-        onUpdateTour(updatedTour);
+        if (data) {
+            // Update the local tour with the new step
+            const updatedSteps = [...(selectedTour.tour_steps || []), data];
+            const updatedTour: Tour = {
+                ...selectedTour,
+                tour_steps: updatedSteps,
+                total_steps: updatedSteps.length,
+            };
+
+            onUpdateTour(updatedTour);
+            toast.success("Step added successfully!");
+        }
     };
 
-    const handleDeleteStep = (stepId: number) => {
-        const updatedSteps = selectedTour.stepDetails.filter(
-            (step) => step.id !== stepId
+    const handleEditStep = async (
+        stepId: number,
+        updatedStepData: Omit<
+            Step,
+            | "id"
+            | "tour_id"
+            | "step_number"
+            | "completion_rate"
+            | "created_at"
+            | "updated_at"
+        >
+    ) => {
+        const { data, error } = await updateStep(
+            stepId,
+            selectedTour.id,
+            userId,
+            {
+                title: updatedStepData.title,
+                description: updatedStepData.description,
+            }
         );
 
-        const updatedTour: Tour = {
-            ...selectedTour,
-            stepDetails: updatedSteps,
-            steps: updatedSteps.length,
-        };
+        console.log(data);
 
-        onUpdateTour(updatedTour);
+        if (error) {
+            toast.error("Failed to update step", {
+                description: error,
+            });
+            return;
+        }
+
+        if (data) {
+            // Update the local tour with the edited step
+            const updatedSteps = (selectedTour.tour_steps || []).map((step) =>
+                step.id === stepId ? data : step
+            );
+
+            const updatedTour: Tour = {
+                ...selectedTour,
+                tour_steps: updatedSteps,
+            };
+
+            onUpdateTour(updatedTour);
+            toast.success("Step updated successfully!");
+        }
     };
+
+    const handleDeleteStep = async (stepId: number) => {
+        const { success, error } = await deleteStep(
+            stepId,
+            selectedTour.id,
+            userId
+        );
+
+        if (error) {
+            toast.error("Failed to delete step", {
+                description: error,
+            });
+            return;
+        }
+
+        if (success) {
+            // Update the local tour by removing the deleted step
+            const updatedSteps = (selectedTour.tour_steps || []).filter(
+                (step) => step.id !== stepId
+            );
+
+            const updatedTour: Tour = {
+                ...selectedTour,
+                tour_steps: updatedSteps,
+                total_steps: updatedSteps.length,
+            };
+
+            onUpdateTour(updatedTour);
+            toast.success("Step deleted successfully!");
+        }
+    };
+
+    // Get steps array safely
+    const steps = (selectedTour.tour_steps || []).sort(
+        (a, b) => a.step_number - b.step_number
+    );
 
     return (
-        <Card className="bg-[#151b2e] border-[#1e2943]">
+        <Card className="bg-sidebar border border-primary/40 hover:border-primary/90 ">
             <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <CardTitle className="text-white text-xl mb-1">
-                            {selectedTour.name}
+                            {selectedTour.title}
                         </CardTitle>
                         <CardDescription className="text-gray-400">
                             {selectedTour.description}
@@ -85,7 +162,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                 </div>
             </CardHeader>
             <CardContent>
-                {selectedTour.stepDetails.length === 0 ? (
+                {steps.length === 0 ? (
                     <div className="text-center py-12 text-gray-400">
                         <p>No steps added yet</p>
                         <p className="text-sm mt-2">
@@ -94,10 +171,10 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                     </div>
                 ) : (
                     <div className="space-y-3">
-                        {selectedTour.stepDetails.map((step, index) => (
+                        {steps.map((step, index) => (
                             <div
                                 key={step.id}
-                                className="bg-[#1e2943] rounded-lg p-4 hover:bg-[#242d47] transition-colors group"
+                                className="bg-slate-800/50 rounded-lg p-4 hover:bg-[#242d47] transition-colors group"
                             >
                                 <div className="flex items-start gap-3">
                                     <Button
@@ -107,8 +184,8 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                                     >
                                         <GripVertical className="w-4 h-4" />
                                     </Button>
-                                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500 text-black font-semibold shrink-0 mt-0.5">
-                                        {index + 1}
+                                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-semibold shrink-0 mt-0.5">
+                                        {step.step_number}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <h4 className="text-white font-medium mb-1">
@@ -121,15 +198,13 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <EditStepDialog
                                             step={step}
-                                            stepNumber={index + 1}
+                                            stepNumber={step.step_number}
                                             onEditStep={handleEditStep}
                                         />
                                         <DeleteStepDialog
                                             stepTitle={step.title}
-                                            stepNumber={index + 1}
-                                            totalSteps={
-                                                selectedTour.stepDetails.length
-                                            }
+                                            stepNumber={step.step_number}
+                                            totalSteps={steps.length}
                                             onDeleteStep={() =>
                                                 handleDeleteStep(step.id)
                                             }
