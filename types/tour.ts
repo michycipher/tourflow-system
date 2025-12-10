@@ -16,7 +16,7 @@
 export interface Step {
     id: number;
     tour_id: number;
-    step_number: number;
+    step_order: number;
     title: string;
     description: string;
     // target_element: string | null;
