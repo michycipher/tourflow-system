@@ -39,7 +39,7 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="p-8 bg-[#110816] min-h-screen">
+        <>
             {/* Header */}
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white mb-2">
@@ -63,7 +63,9 @@ export default function DashboardPage() {
                         </div>
                     </div>
                     <div className="text-3xl font-bold text-white mb-1">7</div>
-                    <div className="text-slate-400 text-sm">Total tours created</div>
+                    <div className="text-slate-400 text-sm">
+                        Total tours created
+                    </div>
                 </div>
 
                 {/* Total steps configured */}
@@ -77,7 +79,9 @@ export default function DashboardPage() {
                         </div>
                     </div>
                     <div className="text-3xl font-bold text-white mb-1">0</div>
-                    <div className="text-slate-400 text-sm">Total Steps Configure</div>
+                    <div className="text-slate-400 text-sm">
+                        Total Steps Configure
+                    </div>
                 </div>
 
                 {/* Active Tours */}
@@ -100,8 +104,13 @@ export default function DashboardPage() {
                 {/* Recent Tours */}
                 <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-xl font-semibold text-white">Recent Tours</h2>
-                        <Link href='/dashboard/tours' className="text-cyan-500 hover:text-cyan-400 text-sm flex items-center">
+                        <h2 className="text-xl font-semibold text-white">
+                            Recent Tours
+                        </h2>
+                        <Link
+                            href="/dashboard/tours"
+                            className="text-cyan-500 hover:text-cyan-400 text-sm flex items-center"
+                        >
                             View All
                             <span className="ml-1">→</span>
                         </Link>
@@ -111,8 +120,12 @@ export default function DashboardPage() {
                         {/* Welcome Tour */}
                         <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer">
                             <div>
-                                <h3 className="text-white font-medium mb-1">Welcome Tour</h3>
-                                <p className="text-slate-400 text-sm">5 steps</p>
+                                <h3 className="text-white font-medium mb-1">
+                                    Welcome Tour
+                                </h3>
+                                <p className="text-slate-400 text-sm">
+                                    5 steps
+                                </p>
                             </div>
                             <span className="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-medium">
                                 Active
@@ -122,8 +135,12 @@ export default function DashboardPage() {
                         {/* Feature Discovery */}
                         <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer">
                             <div>
-                                <h3 className="text-white font-medium mb-1">Feature Discovery</h3>
-                                <p className="text-slate-400 text-sm">5 steps</p>
+                                <h3 className="text-white font-medium mb-1">
+                                    Feature Discovery
+                                </h3>
+                                <p className="text-slate-400 text-sm">
+                                    5 steps
+                                </p>
                             </div>
                             <span className="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-xs font-medium">
                                 Inactive
@@ -133,8 +150,12 @@ export default function DashboardPage() {
                         {/* Onboarding Flow */}
                         <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer">
                             <div>
-                                <h3 className="text-white font-medium mb-1">Onboarding Flow</h3>
-                                <p className="text-slate-400 text-sm">5 steps</p>
+                                <h3 className="text-white font-medium mb-1">
+                                    Onboarding Flow
+                                </h3>
+                                <p className="text-slate-400 text-sm">
+                                    5 steps
+                                </p>
                             </div>
                             <span className="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-xs font-medium">
                                 Active
@@ -145,14 +166,20 @@ export default function DashboardPage() {
 
                 {/* Step Performance */}
                 <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
-                    <h2 className="text-xl font-semibold text-white mb-6">Step Performance</h2>
+                    <h2 className="text-xl font-semibold text-white mb-6">
+                        Step Performance
+                    </h2>
 
                     <div className="space-y-6">
                         {/* Step 1 */}
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-slate-300 text-sm">Step 1</span>
-                                <span className="text-slate-300 text-sm font-medium">95%</span>
+                                <span className="text-slate-300 text-sm">
+                                    Step 1
+                                </span>
+                                <span className="text-slate-300 text-sm font-medium">
+                                    95%
+                                </span>
                             </div>
                             <div className="w-full bg-slate-800 rounded-full h-2">
                                 <div className="bg-cyan-500 h-2 rounded-full w-[95%]"></div>
@@ -162,8 +189,12 @@ export default function DashboardPage() {
                         {/* Step 2 */}
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-slate-300 text-sm">Step 2</span>
-                                <span className="text-slate-300 text-sm font-medium">94%</span>
+                                <span className="text-slate-300 text-sm">
+                                    Step 2
+                                </span>
+                                <span className="text-slate-300 text-sm font-medium">
+                                    94%
+                                </span>
                             </div>
                             <div className="w-full bg-slate-800 rounded-full h-2">
                                 <div className="bg-cyan-500 h-2 rounded-full w-[95%]"></div>
@@ -173,8 +204,12 @@ export default function DashboardPage() {
                         {/* Step 3 */}
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-slate-300 text-sm">Step 3</span>
-                                <span className="text-slate-300 text-sm font-medium">94%</span>
+                                <span className="text-slate-300 text-sm">
+                                    Step 3
+                                </span>
+                                <span className="text-slate-300 text-sm font-medium">
+                                    94%
+                                </span>
                             </div>
                             <div className="w-full bg-slate-800 rounded-full h-2">
                                 <div className="bg-cyan-500 h-2 rounded-full w-[95%]"></div>
@@ -184,8 +219,12 @@ export default function DashboardPage() {
                         {/* Step 4 */}
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-slate-300 text-sm">Step 4</span>
-                                <span className="text-slate-300 text-sm font-medium">93%</span>
+                                <span className="text-slate-300 text-sm">
+                                    Step 4
+                                </span>
+                                <span className="text-slate-300 text-sm font-medium">
+                                    93%
+                                </span>
                             </div>
                             <div className="w-full bg-slate-800 rounded-full h-2">
                                 <div className="bg-cyan-500 h-2 rounded-full w-[95%]"></div>
@@ -195,8 +234,12 @@ export default function DashboardPage() {
                         {/* Step 5 */}
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-slate-300 text-sm">Step 5</span>
-                                <span className="text-slate-300 text-sm font-medium">75%</span>
+                                <span className="text-slate-300 text-sm">
+                                    Step 5
+                                </span>
+                                <span className="text-slate-300 text-sm font-medium">
+                                    75%
+                                </span>
                             </div>
                             <div className="w-full bg-slate-800 rounded-full h-2">
                                 <div className="bg-cyan-500 h-2 rounded-full w-[75%]"></div>
@@ -205,6 +248,6 @@ export default function DashboardPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

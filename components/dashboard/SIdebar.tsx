@@ -49,7 +49,7 @@ export default function TourFlowSidebar() {
 
     const getUserInitials = () => {
         const fullName = getFullName();
-        
+
         if (fullName) {
             const parts = fullName.trim().split(" ");
             const first = parts[0]?.[0]?.toUpperCase() || "";
@@ -57,17 +57,17 @@ export default function TourFlowSidebar() {
             // If only one name, return just first initial
             return parts.length > 1 ? first + last : first;
         }
-        
+
         if (user?.email) {
             return user.email.charAt(0).toUpperCase();
         }
-        
+
         return "U";
     };
 
     const getDisplayName = () => {
         const fullName = getFullName();
-        
+
         if (fullName) {
             return fullName;
         }
@@ -98,7 +98,7 @@ export default function TourFlowSidebar() {
             </SidebarHeader>
 
             {/* MENU */}
-            <SidebarContent className="p-2 mt-6">
+            <SidebarContent className="p-2 mt-6 space-y-3">
                 <SidebarMenu>
                     {menuItems.map((item) => {
                         const isActive = pathname === item.href;
@@ -127,7 +127,6 @@ export default function TourFlowSidebar() {
 
             {/* FOOTER */}
             <SidebarFooter className="border-t border-slate-800 p-3">
-
                 {/* USER CARD */}
                 <div className="mb-3 flex items-center gap-3 rounded-lg bg-slate-800/50 p-3">
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#800080]">
