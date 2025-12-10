@@ -6,7 +6,7 @@ import { FaGithub, FaTwitter } from "react-icons/fa";
 
 export const Footer = () => {
   return (
-    <footer className=" w-full bg-[#0A0F17]/98 text-white">
+    <footer className=" w-full bg-[#050814] text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
@@ -61,7 +61,7 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
+        <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-muted-foreground">
           <p>© 2025 TourFlow. All rights reserved.</p>
         </div>
       </div>

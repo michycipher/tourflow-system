@@ -52,10 +52,12 @@ const skipRatesData = [
 
 export default function AnalyticsPage() {
     return (
-        <div className="p-8 bg-[#110816] min-h-screen">
+        <>
             {/* Header */}
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Analytics</h1>
+                <h1 className="text-3xl font-bold text-white mb-2">
+                    Analytics
+                </h1>
                 <p className="text-slate-400">
                     Track the performance of your onboarding tours.
                 </p>
@@ -71,13 +73,17 @@ export default function AnalyticsPage() {
 
                 {/* Completion Rate */}
                 <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
-                    <p className="text-slate-400 text-sm mb-2">Completion Rate</p>
+                    <p className="text-slate-400 text-sm mb-2">
+                        Completion Rate
+                    </p>
                     <p className="text-4xl font-bold text-purple-400">78%</p>
                 </div>
 
                 {/* Avg Time Spent */}
                 <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
-                    <p className="text-slate-400 text-sm mb-2">Avg. Time Spent</p>
+                    <p className="text-slate-400 text-sm mb-2">
+                        Avg. Time Spent
+                    </p>
                     <p className="text-4xl font-bold text-purple-400">2m 34s</p>
                 </div>
             </div>
@@ -91,7 +97,10 @@ export default function AnalyticsPage() {
                     </h2>
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart data={weeklyData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                            <CartesianGrid
+                                strokeDasharray="3 3"
+                                stroke="#334155"
+                            />
                             <XAxis
                                 dataKey="day"
                                 stroke="#94a3b8"
@@ -127,7 +136,10 @@ export default function AnalyticsPage() {
                     </h2>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={stepPerformanceData}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                            <CartesianGrid
+                                strokeDasharray="3 3"
+                                stroke="#334155"
+                            />
                             <XAxis
                                 dataKey="step"
                                 stroke="#94a3b8"
@@ -145,7 +157,11 @@ export default function AnalyticsPage() {
                                     color: "#fff",
                                 }}
                             />
-                            <Bar dataKey="views" fill="#9d00a8" radius={[8, 8, 0, 0]} />
+                            <Bar
+                                dataKey="views"
+                                fill="#9d00a8"
+                                radius={[8, 8, 0, 0]}
+                            />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
@@ -171,7 +187,10 @@ export default function AnalyticsPage() {
                                     dataKey="value"
                                 >
                                     {tourStatusData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={entry.color} />
+                                        <Cell
+                                            key={`cell-${index}`}
+                                            fill={entry.color}
+                                        />
                                     ))}
                                 </Pie>
                             </PieChart>
@@ -180,11 +199,15 @@ export default function AnalyticsPage() {
                     <div className="flex items-center justify-center gap-6 mt-4">
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-                            <span className="text-slate-300 text-sm">Active: 2</span>
+                            <span className="text-slate-300 text-sm">
+                                Active: 2
+                            </span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-slate-700"></div>
-                            <span className="text-slate-300 text-sm">Inactive: 1</span>
+                            <span className="text-slate-300 text-sm">
+                                Inactive: 1
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -216,6 +239,6 @@ export default function AnalyticsPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

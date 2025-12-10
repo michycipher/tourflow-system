@@ -1,4 +1,3 @@
-// src/lib/store/authStore.ts
 import { create } from 'zustand'
 import { supabase } from '@/lib/supabase'
 import { User } from '@supabase/supabase-js'

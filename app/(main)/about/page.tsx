@@ -5,10 +5,10 @@ import { HiOutlineUsers, HiOutlineHeart } from "react-icons/hi2";
 import { IoAtOutline, IoRocketOutline } from "react-icons/io5";
 
 const team = [
-  { name: "Alex Chen", role: "Founder & CEO", avatar: "AC" },
-  { name: "Sarah Kim", role: "Lead Designer", avatar: "SK" },
-  { name: "Marcus Johnson", role: "Head of Engineering", avatar: "MJ" },
-  { name: "Emily Davis", role: "Product Manager", avatar: "ED" },
+  { name: "BigJesus", role: "Founder & CEO", avatar: "BJ" },
+  { name: "TechGirl", role: "Lead Designer", avatar: "TG" },
+  { name: "Michy", role: "Assistant Designer", avatar: "MJ" },
+  { name: "Page", role: "Head of Engineering", avatar: "PG" },
 ];
 
 const values = [
@@ -39,8 +39,8 @@ const About = () => {
     <div>
       {/* Hero */}
       <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#0A0F17]/99 " />
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="absolute inset-0 bg-[#0A101D] " />
+        <div className="container mx-auto px-4 md:px-0 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -122,7 +122,7 @@ const About = () => {
 
       {/* Values */}
       <section className="py-24 bg-[#0A0F17]">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 md:px-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
