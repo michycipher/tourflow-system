@@ -17,13 +17,13 @@ export const Button: React.FC<ButtonProps> = ({
     const baseStyles =
         "font-semibold rounded-xl transition-all duration-300 hover:scale-105";
 
-    // const variants = {
-    //     primary: "bg-primary  hover:bg-primary/80",
-    //     secondary: "bg-primary/20  text-black hover:bg-primary/10",
-    //     outline:
-    //         "bg-white border-2 border-gray-200 text-gray-700 hover:border-purple-700",
-    //     store: "bg-black text-white hover:bg-gray-900",
-    // };
+    const variants = {
+        primary: "bg-primary  hover:bg-primary/80",
+        secondary: "bg-primary/20  text-black hover:bg-primary/10",
+        outline:
+            "bg-white border-2 border-gray-200 text-gray-700 hover:border-purple-700",
+        store: "bg-black text-white hover:bg-gray-900",
+    };
 
     const sizes = {
         sm: "px-4 py-2 text-[15px]",
