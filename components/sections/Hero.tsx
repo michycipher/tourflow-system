@@ -15,12 +15,12 @@ const Hero = () => {
     return (
         <div>
             {/* Hero Section */}
-            <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden mt-20 w-full ">
+            <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden mt-20 w-full bg-[#080c1b]">
                 {/* Background Effects */}
-                <div className="absolute inset-0 bg-[#0A101D]" />
+                {/* <div className="absolute inset-0 bg-[#0A101D]" /> */}
                 
 
-                <div className="container mx-auto relative z-10 text-white my-10 mt-20">
+                <div className="container mx-auto relative z-10 text-white my-10 mt-20 ">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}

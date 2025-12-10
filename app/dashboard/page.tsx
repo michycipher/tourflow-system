@@ -79,7 +79,7 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="p-8 bg-[#110816] min-h-screen">
+        <>
             {/* Header */}
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white mb-2">
@@ -178,8 +178,13 @@ export default function DashboardPage() {
                 {/* Recent Tours */}
                 <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-xl font-semibold text-white">Recent Tours</h2>
-                        <Link href='/dashboard/tours' className="text-cyan-500 hover:text-cyan-400 text-sm flex items-center">
+                        <h2 className="text-xl font-semibold text-white">
+                            Recent Tours
+                        </h2>
+                        <Link
+                            href="/dashboard/tours"
+                            className="text-cyan-500 hover:text-cyan-400 text-sm flex items-center"
+                        >
                             View All
                             <span className="ml-1">→</span>
                         </Link>
@@ -270,7 +275,7 @@ export default function DashboardPage() {
                     )}
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -488,4 +493,3 @@ export default function DashboardPage() {
 //         </div>
 //     );
 // }
-

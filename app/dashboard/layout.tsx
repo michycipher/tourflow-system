@@ -21,7 +21,9 @@ export default function DashboardLayout({
                             A
                         </div>
                     </div>
-                    <main className="flex-1 overflow-auto">{children}</main>
+                    <main className="flex-1 overflow-auto p-8 bg-[#110816]">
+                        {children}
+                    </main>
                 </div>
             </div>
         </SidebarProvider>

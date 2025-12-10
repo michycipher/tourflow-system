@@ -24,7 +24,7 @@ export const Navbar = () => {
             animate={{ y: 0 }}
             className="fixed top-0 left-0 right-0 z-50 bg-[#0A101D]/95 text-white"
         >
-            <nav className="container mx-auto h-20 flex items-center justify-between">
+            <nav className="container mx-auto px-4 sm:px-18 h-20 flex items-center justify-between w-full max-w-[1440px]">
                 <Link href="/" className="flex items-center gap-2">
                     <span className="font-display font-bold text-xl md:text-2xl">
                         TourFlow
@@ -88,24 +88,24 @@ export const Navbar = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="md:hidden glass border-b border-border/50"
+                    className="md:hidden"
                 >
-                    <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+                    <div className="container bg-[#0A101D]/95 mx-auto px-4 py-4 flex flex-col gap-4">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.path}
                                 href={link.path}
                                 onClick={() => setIsMenuOpen(false)}
-                                className={`text-sm font-medium transition-colors hover:text-primary ${
-                                    pathname === link.path
-                                        ? "text-primary"
-                                        : "text-muted-foreground"
-                                }`}
-                            >
+                                className={`text-sm md:text-base font-medium  transition-colors hover:text-[#800080]/75 ${
+                                pathname === link.path
+                                    ? "text-[#800080]"
+                                    : "text-white/75"
+                            }`}
+                        >
                                 {link.label}
                             </Link>
                         ))}
-                        <div className="flex flex-col gap-2 pt-4 border-t border-border">
+                        <div className="flex w-full gap-2 pt-4">
                             <Link
                                 href="/auth/login"
                                 onClick={() => setIsMenuOpen(false)}
