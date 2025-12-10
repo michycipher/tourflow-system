@@ -10,7 +10,7 @@ export default function DashboardPage() {
     const { user, loading, checkAuth } = useAuthStore();
     const router = useRouter();
     const [mounted, setMounted] = useState(false);
-
+    
     const [stats, setStats] = useState<DashboardStats>({
         totalTours: 0,
         totalSteps: 0,
@@ -89,7 +89,7 @@ export default function DashboardPage() {
     }
 
     return (
-        <div className="bg-[#110816] min-h-screen">
+        <div className="p-8 bg-[#110816] min-h-screen">
             <div className="mb-8">
                 <h1 className="text-3xl font-bold text-white mb-2">
                     Welcome back, {getUserName()}!
@@ -102,7 +102,7 @@ export default function DashboardPage() {
             {/* Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {/* Total Tours */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <Eye className="w-5 h-5 text-cyan-500" />
@@ -111,7 +111,6 @@ export default function DashboardPage() {
                             <span className="mr-1">Total</span>
                         </div>
                     </div>
-
                     <div className="text-3xl font-bold text-white mb-1">
                         {dataLoading ? (
                             <span className="animate-pulse">...</span>
@@ -123,7 +122,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Total Steps */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <Clock className="w-5 h-5 text-cyan-500" />
@@ -143,7 +142,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Active Tours */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <CheckCircle className="w-5 h-5 text-cyan-500" />
@@ -163,7 +162,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Total Users */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <Users className="w-5 h-5 text-cyan-500" />
@@ -179,16 +178,14 @@ export default function DashboardPage() {
                             stats.totalUsers
                         )}
                     </div>
-                    <div className="text-slate-400 text-sm">
-                        Registered Users
-                    </div>
+                    <div className="text-slate-400 text-sm">Registered Users</div>
                 </div>
             </div>
 
             {/* Bottom Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Tours */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-xl font-semibold text-white">
                             Recent Tours
@@ -205,10 +202,7 @@ export default function DashboardPage() {
                     {dataLoading ? (
                         <div className="space-y-4">
                             {[1, 2, 3].map((i) => (
-                                <div
-                                    key={i}
-                                    className="p-4 bg-slate-800/50 rounded-lg animate-pulse"
-                                >
+                                <div key={i} className="p-4 bg-slate-800/50 rounded-lg animate-pulse">
                                     <div className="h-4 bg-slate-700 rounded w-3/4 mb-2"></div>
                                     <div className="h-3 bg-slate-700 rounded w-1/4"></div>
                                 </div>
@@ -217,28 +211,20 @@ export default function DashboardPage() {
                     ) : recentTours.length > 0 ? (
                         <div className="space-y-4">
                             {recentTours.map((tour) => (
-                                <div
-                                    key={tour.id}
+                                <div 
+                                    key={tour.id} 
                                     className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
                                 >
                                     <div>
-                                        <h3 className="text-white font-medium mb-1">
-                                            {tour.title}
-                                        </h3>
-                                        <p className="text-slate-400 text-sm">
-                                            {tour.total_steps} steps
-                                        </p>
+                                        <h3 className="text-white font-medium mb-1">{tour.title}</h3>
+                                        <p className="text-slate-400 text-sm">{tour.total_steps} steps</p>
                                     </div>
-                                    <span
-                                        className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                            tour.status === "active"
-                                                ? "bg-emerald-500/10 text-emerald-500"
-                                                : "bg-slate-700 text-slate-400"
-                                        }`}
-                                    >
-                                        {tour.status === "active"
-                                            ? "Active"
-                                            : "Inactive"}
+                                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                        tour.status === 'active' 
+                                            ? 'bg-emerald-500/10 text-emerald-500' 
+                                            : 'bg-slate-700 text-slate-400'
+                                    }`}>
+                                        {tour.status === 'active' ? 'Active' : 'Inactive'}
                                     </span>
                                 </div>
                             ))}
@@ -247,7 +233,7 @@ export default function DashboardPage() {
                         <div className="text-center py-8 text-slate-400">
                             <p className="mb-4">No tours yet. Create your first tour to get started!</p>
                             <Link 
-                                href="/dashboard/tours" 
+                                href="/dashboard/tours/new" 
                                 className="inline-block px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors"
                             >
                                 Create Tour
@@ -257,10 +243,8 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Step Performance */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
-                    <h2 className="text-xl font-semibold text-white mb-6">
-                        Average Step Performance
-                    </h2>
+                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                    <h2 className="text-xl font-semibold text-white mb-6">Average Step Performance</h2>
 
                     {dataLoading ? (
                         <div className="space-y-6">
@@ -279,19 +263,15 @@ export default function DashboardPage() {
                             {stepPerformance.map((step) => (
                                 <div key={step.step_order}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-slate-300 text-sm">
-                                            Step {step.step_order}
-                                        </span>
+                                        <span className="text-slate-300 text-sm">Step {step.step_order}</span>
                                         <span className="text-slate-300 text-sm font-medium">
                                             {step.completion_rate.toFixed(0)}%
                                         </span>
                                     </div>
                                     <div className="w-full bg-slate-800 rounded-full h-2">
-                                        <div
-                                            className="bg-cyan-500 h-2 rounded-full transition-all duration-500"
-                                            style={{
-                                                width: `${step.completion_rate}%`,
-                                            }}
+                                        <div 
+                                            className="bg-cyan-500 h-2 rounded-full transition-all duration-500" 
+                                            style={{ width: `${step.completion_rate}%` }}
                                         ></div>
                                     </div>
                                 </div>
@@ -332,7 +312,7 @@ export default function DashboardPage() {
 // export default function DashboardPage() {
 //     const { user, loading, checkAuth } = useAuthStore();
 //     const router = useRouter();
-
+    
 //     const [stats, setStats] = useState<DashboardStats>({
 //         totalTours: 0,
 //         totalSteps: 0,
@@ -525,8 +505,8 @@ export default function DashboardPage() {
 //                     ) : recentTours.length > 0 ? (
 //                         <div className="space-y-4">
 //                             {recentTours.map((tour) => (
-//                                 <div
-//                                     key={tour.id}
+//                                 <div 
+//                                     key={tour.id} 
 //                                     className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
 //                                 >
 //                                     <div>
@@ -534,8 +514,8 @@ export default function DashboardPage() {
 //                                         <p className="text-slate-400 text-sm">{tour.total_steps} steps</p>
 //                                     </div>
 //                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-//                                         tour.status === 'active'
-//                                             ? 'bg-emerald-500/10 text-emerald-500'
+//                                         tour.status === 'active' 
+//                                             ? 'bg-emerald-500/10 text-emerald-500' 
 //                                             : 'bg-slate-700 text-slate-400'
 //                                     }`}>
 //                                         {tour.status === 'active' ? 'Active' : 'Inactive'}
@@ -546,8 +526,8 @@ export default function DashboardPage() {
 //                     ) : (
 //                         <div className="text-center py-8 text-slate-400">
 //                             <p>No tours yet. Create your first tour to get started!</p>
-//                             <Link
-//                                 href="/dashboard/tours/new"
+//                             <Link 
+//                                 href="/dashboard/tours/new" 
 //                                 className="mt-4 inline-block px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors"
 //                             >
 //                                 Create Tour
@@ -575,16 +555,16 @@ export default function DashboardPage() {
 //                     ) : stepPerformance.length > 0 ? (
 //                         <div className="space-y-6">
 //                             {stepPerformance.map((step) => (
-//                                 <div key={step.step_number}>
+//                                 <div key={step.step_order}>
 //                                     <div className="flex items-center justify-between mb-2">
-//                                         <span className="text-slate-300 text-sm">Step {step.step_number}</span>
+//                                         <span className="text-slate-300 text-sm">Step {step.step_order}</span>
 //                                         <span className="text-slate-300 text-sm font-medium">
 //                                             {step.completion_rate.toFixed(0)}%
 //                                         </span>
 //                                     </div>
 //                                     <div className="w-full bg-slate-800 rounded-full h-2">
-//                                         <div
-//                                             className="bg-cyan-500 h-2 rounded-full transition-all duration-500"
+//                                         <div 
+//                                             className="bg-cyan-500 h-2 rounded-full transition-all duration-500" 
 //                                             style={{ width: `${step.completion_rate}%` }}
 //                                         ></div>
 //                                     </div>
