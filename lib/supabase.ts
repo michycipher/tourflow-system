@@ -17,18 +17,7 @@ export async function signOut() {
     return { error };
 }
 
-// Types
-export interface Step {
-    id: number;
-    tour_id: number;
-    step_number: number;
-    title: string;
-    description: string;
-    target_element: string | null;
-    completion_rate: number;
-    created_at: string;
-    updated_at: string;
-}
+
 
 import {
     CreateStepInput,
@@ -64,7 +53,6 @@ export async function createTour(userId: string, tourData: CreateTourInput) {
                 step_number: index + 1,
                 title: step.title,
                 description: step.description,
-                target_element: step.target_element || null,
                 completion_rate: 0,
             }));
 
@@ -263,7 +251,6 @@ export async function addStepToTour(
                     step_number: nextStepNumber,
                     title: stepData.title,
                     description: stepData.description,
-                    target_element: stepData.target_element || null,
                     completion_rate: 0,
                 },
             ])

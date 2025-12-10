@@ -19,7 +19,7 @@ export interface Step {
     step_number: number;
     title: string;
     description: string;
-    target_element: string | null;
+    // target_element: string | null;
     completion_rate: number;
     created_at: string;
     updated_at: string;
@@ -44,7 +44,6 @@ export interface CreateTourInput {
     steps?: Array<{
         title: string;
         description: string;
-        target_element?: string;
     }>;
 }
 
@@ -57,13 +56,11 @@ export interface UpdateTourInput {
 export interface CreateStepInput {
     title: string;
     description: string;
-    target_element?: string;
 }
 
 export interface UpdateStepInput {
     title?: string;
     description?: string;
-    target_element?: string;
     step_number?: number;
 }
 

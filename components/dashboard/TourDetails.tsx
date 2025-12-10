@@ -40,7 +40,6 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
         const { data, error } = await addStepToTour(selectedTour.id, userId, {
             title: newStep.title,
             description: newStep.description,
-            target_element: newStep.target_element || undefined,
         });
 
         if (error) {
@@ -66,16 +65,14 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
 
     const handleEditStep = async (
         stepId: number,
-        updatedStepData: Partial<
-            Omit<
-                Step,
-                | "id"
-                | "tour_id"
-                | "step_number"
-                | "completion_rate"
-                | "created_at"
-                | "updated_at"
-            >
+        updatedStepData: Omit<
+            Step,
+            | "id"
+            | "tour_id"
+            | "step_number"
+            | "completion_rate"
+            | "created_at"
+            | "updated_at"
         >
     ) => {
         const { data, error } = await updateStep(
@@ -85,7 +82,6 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
             {
                 title: updatedStepData.title,
                 description: updatedStepData.description,
-                target_element: updatedStepData.target_element,
             }
         );
 
@@ -151,7 +147,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
     );
 
     return (
-        <Card className="bg-[#151b2e] border-[#1e2943]">
+        <Card className="bg-sidebar border border-primary/40 hover:border-primary/90 ">
             <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
@@ -178,7 +174,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                         {steps.map((step, index) => (
                             <div
                                 key={step.id}
-                                className="bg-[#1e2943] rounded-lg p-4 hover:bg-[#242d47] transition-colors group"
+                                className="bg-slate-800/50 rounded-lg p-4 hover:bg-[#242d47] transition-colors group"
                             >
                                 <div className="flex items-start gap-3">
                                     <Button
@@ -188,7 +184,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                                     >
                                         <GripVertical className="w-4 h-4" />
                                     </Button>
-                                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-cyan-500 text-black font-semibold shrink-0 mt-0.5">
+                                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white font-semibold shrink-0 mt-0.5">
                                         {step.step_number}
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -198,11 +194,6 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                                         <p className="text-gray-400 text-sm">
                                             {step.description}
                                         </p>
-                                        {step.target_element && (
-                                            <p className="text-cyan-400 text-xs mt-1 font-mono">
-                                                {step.target_element}
-                                            </p>
-                                        )}
                                     </div>
                                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <EditStepDialog

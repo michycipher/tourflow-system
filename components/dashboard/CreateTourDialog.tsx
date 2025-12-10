@@ -28,7 +28,6 @@ import { createTour } from "@/lib/supabase";
 interface StepInput {
     title: string;
     description: string;
-    target_element?: string;
 }
 
 interface CreateTourDialogProps {
@@ -47,7 +46,7 @@ export default function CreateTourDialog({
         "inactive"
     );
     const [steps, setSteps] = useState<StepInput[]>([
-        { title: "", description: "", target_element: "" },
+        { title: "", description: "" },
     ]);
     const [errors, setErrors] = useState<{
         tourName?: string;
@@ -57,10 +56,7 @@ export default function CreateTourDialog({
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const addStep = () => {
-        setSteps([
-            ...steps,
-            { title: "", description: "", target_element: "" },
-        ]);
+        setSteps([...steps, { title: "", description: "" }]);
         if (errors.steps) {
             setErrors({ ...errors, steps: undefined });
         }
@@ -129,10 +125,9 @@ export default function CreateTourDialog({
                 .map((step) => ({
                     title: step.title.trim(),
                     description: step.description.trim(),
-                    target_element: step.target_element?.trim() || undefined,
                 }));
 
-            const { data, error } = await createTour(userId, {
+            const { error } = await createTour(userId, {
                 title: tourName.trim(),
                 description: tourDescription.trim(),
                 status: tourStatus,
@@ -151,7 +146,7 @@ export default function CreateTourDialog({
             setTourName("");
             setTourDescription("");
             setTourStatus("inactive");
-            setSteps([{ title: "", description: "", target_element: "" }]);
+            setSteps([{ title: "", description: "" }]);
             setErrors({});
             setOpen(false);
 
@@ -184,7 +179,7 @@ export default function CreateTourDialog({
         setTourName("");
         setTourDescription("");
         setTourStatus("inactive");
-        setSteps([{ title: "", description: "", target_element: "" }]);
+        setSteps([{ title: "", description: "" }]);
         setErrors({});
         setOpen(false);
     };
@@ -198,7 +193,7 @@ export default function CreateTourDialog({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="bg-cyan-500 hover:bg-cyan-600 text-black font-medium">
+                <Button variant="default" className="text-black font-medium">
                     <Plus className="w-4 h-4 mr-2" />
                     Create Tour
                 </Button>
@@ -223,7 +218,7 @@ export default function CreateTourDialog({
                         }
                     }
                 }}
-                className="bg-[#151b2e] border-[#1e2943] text-white max-w-[95vw] sm:max-w-2xl lg:max-w-3xl max-h-[90vh] overflow-y-auto"
+                className="bg-sidebar border-[#1e2943] text-white max-w-[95vw] sm:max-w-2xl lg:max-w-3xl max-h-[90vh] overflow-y-auto"
             >
                 <DialogHeader className="space-y-3">
                     <DialogTitle className="text-xl sm:text-2xl">
@@ -329,11 +324,11 @@ export default function CreateTourDialog({
 
                     {/* Steps Section */}
                     <div className="space-y-4">
-                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <div className="flex  flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                             <Label className="text-white text-base sm:text-lg">
                                 Tour Steps *
                             </Label>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 ">
                                 <div className="text-xs sm:text-sm text-gray-400">
                                     {validStepsCount} / 5 steps completed
                                 </div>
@@ -368,10 +363,10 @@ export default function CreateTourDialog({
                             {steps.map((step, index) => (
                                 <div
                                     key={index}
-                                    className="bg-[#1e2943] rounded-lg p-3 sm:p-4 space-y-3"
+                                    className="bg-slate-800/50! rounded-lg p-3 sm:p-4 space-y-3"
                                 >
                                     <div className="flex items-start gap-2 sm:gap-3">
-                                        <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-cyan-500 text-black font-semibold shrink-0 mt-1 text-sm sm:text-base">
+                                        <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-primary text-black font-semibold shrink-0 mt-1 text-sm sm:text-base">
                                             {index + 1}
                                         </div>
                                         <div className="flex-1 space-y-3 min-w-0">
@@ -399,20 +394,6 @@ export default function CreateTourDialog({
                                                 }
                                                 className="bg-[#0a0e1a] border-[#2a3654] text-white placeholder:text-gray-500 min-h-[60px] text-sm sm:text-base"
                                             />
-                                            <Input
-                                                placeholder="Target element (optional, e.g., #signup-button)"
-                                                value={
-                                                    step.target_element || ""
-                                                }
-                                                onChange={(e) =>
-                                                    updateStep(
-                                                        index,
-                                                        "target_element",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                className="bg-[#0a0e1a] border-[#2a3654] text-white placeholder:text-gray-500 text-sm sm:text-base"
-                                            />
                                         </div>
                                         {steps.length > 1 && (
                                             <Button
@@ -436,7 +417,7 @@ export default function CreateTourDialog({
                             type="button"
                             variant="outline"
                             onClick={addStep}
-                            className="w-full border-[#2a3654] text-cyan-500 hover:bg-cyan-500/10 hover:text-cyan-400 text-sm sm:text-base"
+                            className="w-full bg-bg-cyan-500/40 text-cyan-500 hover:bg-cyan-500/10 hover:text-cyan-400 text-sm sm:text-base"
                         >
                             <Plus className="w-4 h-4 mr-2" />
                             Add Step
@@ -444,20 +425,18 @@ export default function CreateTourDialog({
                     </div>
                 </div>
 
-                <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
+                <DialogFooter className="flex-col sm:flex-row gap-2! sm:gap-0">
                     <Button
                         type="button"
-                        variant="outline"
+                        variant="cancel"
                         onClick={handleCancel}
                         disabled={isSubmitting}
-                        className="border-[#2a3654] text-gray-400 hover:bg-[#1e2943] hover:text-white w-full sm:w-auto"
                     >
                         Cancel
                     </Button>
                     <Button
                         type="button"
                         onClick={handleSubmit}
-                        className="bg-cyan-500 hover:bg-cyan-600 text-black font-medium disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                         disabled={validStepsCount < 5 || isSubmitting}
                     >
                         {isSubmitting ? "Creating..." : "Create Tour"}

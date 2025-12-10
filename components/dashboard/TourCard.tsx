@@ -32,7 +32,7 @@ const TourCard = ({
     return (
         <Card
             key={tour.id}
-            className={`bg-[#151b2e] border-[#1e2943] cursor-pointer transition-all hover:border-cyan-500/50 ${
+            className={`bg-sidebar cursor-pointer! transition-all border border-primary/40 hover:border-primary/90${
                 selectedTour?.id === tour.id
                     ? "border-cyan-500 ring-1 ring-cyan-500/20"
                     : ""
