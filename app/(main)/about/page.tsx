@@ -7,7 +7,7 @@ import { IoAtOutline, IoRocketOutline } from "react-icons/io5";
 const team = [
   { name: "BigJesus", role: "Founder & CEO", avatar: "BJ" },
   { name: "TechGirl", role: "Lead Designer", avatar: "TG" },
-  { name: "Michy", role: "Assistant Designer", avatar: "MJ" },
+  { name: "Michy", role: "Software Engineer", avatar: "MI" },
   { name: "Page", role: "Head of Engineering", avatar: "PG" },
 ];
 
