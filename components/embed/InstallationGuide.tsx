@@ -1,4 +1,3 @@
-// components/embed/InstallationGuide.tsx
 import { Book, CheckCircle } from "lucide-react";
 
 export default function InstallationGuide() {

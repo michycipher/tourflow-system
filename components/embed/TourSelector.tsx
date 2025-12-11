@@ -33,7 +33,7 @@ export default function TourSelector({ tours, selectedTour, onSelectTour }: Tour
                   <div className="w-2 h-2 rounded-full bg-white"></div>
                 )}
               </div>
-              <span className="font-medium text-white">{tour.name}</span>
+              <span className="font-medium text-white">{tour.title}</span>
             </div>
             <div className="text-slate-400 text-sm">{tour.steps} steps</div>
           </div>

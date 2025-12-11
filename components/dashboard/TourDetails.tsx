@@ -184,7 +184,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
                                     >
                                         <GripVertical className="w-4 h-4" />
                                     </Button>
-                                    <div className="flex items-center justify-center p-8 rounded-full bg-primary text-white! font-semibold shrink-0 mt-0.5">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary text-white! font-semibold shrink-0 mt-0.5">
                                         <p className="text-white">
                                             {step.step_order}
                                         </p>

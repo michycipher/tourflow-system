@@ -162,7 +162,13 @@ const TourCard = ({
     const handleDelete = async () => {
         setIsDeleting(true);
         try {
-            const { error } = await deleteTour(tour.id, userId);
+
+            console.log(userId);
+            console.log(tour.id)
+            const { error, success } = await deleteTour(tour.id, userId);
+
+            console.log(success);
+
 
             if (error) {
                 console.error("Error deleting tour:", error);
@@ -310,6 +316,7 @@ const TourCard = ({
                     </div>
                 </CardContent>
             </Card>
+
 
             {/* Delete Confirmation Dialog */}
             <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

@@ -179,7 +179,9 @@ export default function DashboardPage() {
                             stats.totalUsers
                         )}
                     </div>
-                    <div className="text-slate-400 text-sm">Registered Users</div>
+                    <div className="text-slate-400 text-sm">
+                        Registered Users
+                    </div>
                 </div>
             </div>
 
@@ -203,7 +205,10 @@ export default function DashboardPage() {
                     {dataLoading ? (
                         <div className="space-y-4">
                             {[1, 2, 3].map((i) => (
-                                <div key={i} className="p-4 bg-slate-800/50 rounded-lg animate-pulse">
+                                <div
+                                    key={i}
+                                    className="p-4 bg-slate-800/50 rounded-lg animate-pulse"
+                                >
                                     <div className="h-4 bg-slate-700 rounded w-3/4 mb-2"></div>
                                     <div className="h-3 bg-slate-700 rounded w-1/4"></div>
                                 </div>
@@ -217,22 +222,33 @@ export default function DashboardPage() {
                                     className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer"
                                 >
                                     <div>
-                                        <h3 className="text-white font-medium mb-1">{tour.title}</h3>
-                                        <p className="text-slate-400 text-sm">{tour.total_steps} steps</p>
+                                        <h3 className="text-white font-medium mb-1">
+                                            {tour.title}
+                                        </h3>
+                                        <p className="text-slate-400 text-sm">
+                                            {tour.total_steps} steps
+                                        </p>
                                     </div>
-                                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                        tour.status === 'active'
-                                            ? 'bg-emerald-500/10 text-emerald-500'
-                                            : 'bg-slate-700 text-slate-400'
-                                    }`}>
-                                        {tour.status === 'active' ? 'Active' : 'Inactive'}
+                                    <span
+                                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                                            tour.status === "active"
+                                                ? "bg-emerald-500/10 text-emerald-500"
+                                                : "bg-slate-700 text-slate-400"
+                                        }`}
+                                    >
+                                        {tour.status === "active"
+                                            ? "Active"
+                                            : "Inactive"}
                                     </span>
                                 </div>
                             ))}
                         </div>
                     ) : (
                         <div className="text-center py-8 text-slate-400">
-                            <p className="mb-4">No tours yet. Create your first tour to get started!</p>
+                            <p className="mb-4">
+                                No tours yet. Create your first tour to get
+                                started!
+                            </p>
                             <Link
                                 href="/dashboard/tours/new"
                                 className="inline-block px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors"
@@ -245,7 +261,9 @@ export default function DashboardPage() {
 
                 {/* Step Performance */}
                 <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
-                    <h2 className="text-xl font-semibold text-white mb-6">Average Step Performance</h2>
+                    <h2 className="text-xl font-semibold text-white mb-6">
+                        Average Step Performance
+                    </h2>
 
                     {dataLoading ? (
                         <div className="space-y-6">
@@ -262,9 +280,11 @@ export default function DashboardPage() {
                     ) : stepPerformance.length > 0 ? (
                         <div className="space-y-6">
                             {stepPerformance.map((step) => (
-                                <div key={step.step_number}>
+                                <div key={step.step_order}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-slate-300 text-sm">Step {step.step_number}</span>
+                                        <span className="text-slate-300 text-sm">
+                                            Step {step.step_order}
+                                        </span>
                                         <span className="text-slate-300 text-sm font-medium">
                                             {step.completion_rate.toFixed(0)}%
                                         </span>
@@ -272,7 +292,9 @@ export default function DashboardPage() {
                                     <div className="w-full bg-slate-800 rounded-full h-2">
                                         <div
                                             className="bg-cyan-500 h-2 rounded-full transition-all duration-500"
-                                            style={{ width: `${step.completion_rate}%` }}
+                                            style={{
+                                                width: `${step.completion_rate}%`,
+                                            }}
                                         ></div>
                                     </div>
                                 </div>
