@@ -51,6 +51,7 @@ export async function createTour(userId: string, tourData: CreateTourInput) {
             const stepsToInsert = tourData.steps.map((step, index) => ({
                 tour_id: tour.id,
                 step_order: index + 1,
+                "Order": index + 1,
                 title: step.title,
                 description: step.description,
                 completion_rate: 0,
