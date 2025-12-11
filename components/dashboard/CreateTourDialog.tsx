@@ -111,6 +111,7 @@ export default function CreateTourDialog({
 
     const handleSubmit = async () => {
         if (!validateForm()) {
+
             toast.error("Please fill in all required fields", {
                 description: "Check the form for validation errors",
             });
@@ -192,7 +193,6 @@ export default function CreateTourDialog({
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-
             <DialogTrigger asChild>
                 <Button variant="default" className="text-black font-medium">
                     <Plus className="w-4 h-4 mr-2" />
@@ -438,7 +438,7 @@ export default function CreateTourDialog({
                     <Button
                         type="button"
                         onClick={handleSubmit}
-                        disabled={validStepsCount < 5 || isSubmitting}
+                        disabled={isSubmitting}
                     >
                         {isSubmitting ? "Creating..." : "Create Tour"}
                     </Button>
