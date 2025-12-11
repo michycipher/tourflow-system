@@ -61,7 +61,7 @@ export interface CreateStepInput {
 export interface UpdateStepInput {
     title?: string;
     description?: string;
-    step_number?: number;
+    step_order?: number;
 }
 
 // export interface Tour {

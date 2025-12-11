@@ -50,7 +50,7 @@ export async function createTour(userId: string, tourData: CreateTourInput) {
         if (tourData.steps && tourData.steps.length > 0) {
             const stepsToInsert = tourData.steps.map((step, index) => ({
                 tour_id: tour.id,
-                step_number: index + 1,
+                step_order: index + 1,
                 title: step.title,
                 description: step.description,
                 completion_rate: 0,
@@ -232,14 +232,14 @@ export async function addStepToTour(
         // Get the next step number
         const { data: existingSteps } = await supabase
             .from("tour_steps")
-            .select("step_number")
+            .select("step_order")
             .eq("tour_id", tourId)
-            .order("step_number", { ascending: false })
+            .order("step_order", { ascending: false })
             .limit(1);
 
         const nextStepNumber =
             existingSteps && existingSteps.length > 0
-                ? existingSteps[0].step_number + 1
+                ? existingSteps[0].step_order + 1
                 : 1;
 
         // Create the step
@@ -248,7 +248,7 @@ export async function addStepToTour(
             .insert([
                 {
                     tour_id: tourId,
-                    step_number: nextStepNumber,
+                    step_order: nextStepNumber,
                     title: stepData.title,
                     description: stepData.description,
                     completion_rate: 0,
@@ -282,7 +282,7 @@ export async function getTourSteps(tourId: number) {
             .from("tour_steps")
             .select("*")
             .eq("tour_id", tourId)
-            .order("step_number", { ascending: true });
+            .order("step_order", { ascending: true });
 
         if (error) throw error;
         return { data, error: null };
@@ -371,7 +371,7 @@ export async function deleteStep(
             for (let i = 0; i < remainingSteps.length; i++) {
                 await supabase
                     .from("tour_steps")
-                    .update({ step_number: i + 1 })
+                    .update({ step_order: i + 1 })
                     .eq("id", remainingSteps[i].id);
             }
         }
@@ -405,7 +405,7 @@ export async function reorderSteps(
             await supabase
                 .from("tour_steps")
                 .update({
-                    step_number: i + 1,
+                    step_order: i + 1,
                     updated_at: new Date().toISOString(),
                 })
                 .eq("id", stepIds[i])
