@@ -102,10 +102,10 @@ export default function DashboardPage() {
             {/* Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {/* Total Tours */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-sidebar! rounded-lg p-6 border border-[#800080]!">
                     <div className="flex items-center justify-between mb-4">
-                        <div className="p-2 bg-cyan-500/10 rounded-lg">
-                            <Eye className="w-5 h-5 text-cyan-500" />
+                        <div className="p-2 bg-[#800080]/10 rounded-lg">
+                            <Eye className="w-5 h-5 text-purple-500" />
                         </div>
                         <div className="flex items-center text-emerald-500 text-sm">
                             <span className="mr-1">Total</span>
@@ -123,10 +123,10 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Total Steps */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-sidebar! rounded-lg p-6 border border-[#800080]">
                     <div className="flex items-center justify-between mb-4">
-                        <div className="p-2 bg-cyan-500/10 rounded-lg">
-                            <Clock className="w-5 h-5 text-cyan-500" />
+                        <div className="p-2 bg-[#800080]/10 rounded-lg">
+                            <Clock className="w-5 h-5 text-purple-500" />
                         </div>
                         <div className="flex items-center text-emerald-500 text-sm">
                             <span className="mr-1">Steps</span>
@@ -143,10 +143,10 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Active Tours */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-sidebar! rounded-lg p-6 border border-[#800080]">
                     <div className="flex items-center justify-between mb-4">
-                        <div className="p-2 bg-cyan-500/10 rounded-lg">
-                            <CheckCircle className="w-5 h-5 text-cyan-500" />
+                        <div className="p-2 bg-[#800080]/10 rounded-lg">
+                            <CheckCircle className="w-5 h-5 text-purple-500" />
                         </div>
                         <div className="flex items-center text-emerald-500 text-sm">
                             <span className="mr-1">Active</span>
@@ -163,10 +163,10 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Total Users */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-sidebar! rounded-lg p-6 border border-[#800080]">
                     <div className="flex items-center justify-between mb-4">
-                        <div className="p-2 bg-cyan-500/10 rounded-lg">
-                            <Users className="w-5 h-5 text-cyan-500" />
+                        <div className="p-2 bg-[#800080]/10 rounded-lg">
+                            <Users className="w-5 h-5 text-purple-500" />
                         </div>
                         <div className="flex items-center text-emerald-500 text-sm">
                             <span className="mr-1">Accounts</span>
@@ -188,14 +188,14 @@ export default function DashboardPage() {
             {/* Bottom Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Tours */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-sidebar! rounded-lg p-6 border border-[#800080]">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-xl font-semibold text-white">
                             Recent Tours
                         </h2>
                         <Link
                             href="/dashboard/tours"
-                            className="text-cyan-500 hover:text-cyan-400 text-sm flex items-center"
+                            className="text-purple-500 hover:text-purple-400 text-sm flex items-center"
                         >
                             View All
                             <ArrowRight className="ml-1 w-4 h-4" />
@@ -207,7 +207,7 @@ export default function DashboardPage() {
                             {[1, 2, 3].map((i) => (
                                 <div
                                     key={i}
-                                    className="p-4 bg-slate-800/50 rounded-lg animate-pulse"
+                                    className="p-4 bg-[#800080]/50 rounded-lg animate-pulse"
                                 >
                                     <div className="h-4 bg-slate-700 rounded w-3/4 mb-2"></div>
                                     <div className="h-3 bg-slate-700 rounded w-1/4"></div>
@@ -248,7 +248,7 @@ export default function DashboardPage() {
                             <p className="mb-4">No tours yet. Create your first tour to get started!</p>
                             <Link 
                                 href="/dashboard/tours" 
-                                className="inline-block px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors"
+                                className="inline-block px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
                             >
                                 Create Tour
                             </Link>
@@ -257,7 +257,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Step Performance */}
-                <div className="bg-sidebar! rounded-lg p-6 border border-slate-800!">
+                <div className="bg-sidebar! rounded-lg p-6 border border-[#800080]">
                     <h2 className="text-xl font-semibold text-white mb-6">
                         Average Step Performance
                     </h2>
@@ -288,7 +288,7 @@ export default function DashboardPage() {
                                     </div>
                                     <div className="w-full bg-slate-800 rounded-full h-2">
                                         <div
-                                            className="bg-cyan-500 h-2 rounded-full transition-all duration-500"
+                                            className="bg-purple-500 h-2 rounded-full transition-all duration-500"
                                             style={{
                                                 width: `${step.completion_rate}%`,
                                             }}
