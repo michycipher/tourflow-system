@@ -25,7 +25,7 @@ const steps = [
 
 return (
       <section className="py-24 bg-[#0A0F17]/98 text-white">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-5">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ return (
               >
                 {index < steps.length - 1 && (
                   <div className="hidden md:block absolute top-12 left-1/2 w-full h-px 
-                  bg-linear-to-r from-[#800080]/50 to-transparent" />
+                  bg-linear-to-r from-[#800080]/80 to-transparent" />
                 )}
                 <div className="text-center">
                   <div className="inline-flex items-center justify-center w-24 h-24
