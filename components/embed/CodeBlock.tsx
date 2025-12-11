@@ -23,27 +23,29 @@ export default function CodeBlock({ code, language = "html" }: CodeBlockProps) {
 
   return (
     <div className="relative rounded-lg border border-slate-800 bg-slate-900 overflow-hidden">
-      <div className="flex justify-between items-center px-4 py-3 bg-slate-950 border-b border-slate-800">
-        <div className="text-sm font-mono text-slate-400">{language}</div>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-slate-950 border-b border-slate-800">
+        <div className="text-xs sm:text-sm font-mono text-slate-400">
+          {language}
+        </div>
         <button
           onClick={copyToClipboard}
-          className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-md bg-purple-500 hover:bg-purple-600 text-white transition-colors"
+          className="flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm rounded-md bg-purple-500 hover:bg-purple-600 text-white transition-colors w-full sm:w-auto"
         >
           {copied ? (
             <>
-              <Check className="w-4 h-4" />
-              Copied!
+              <Check className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>Copied!</span>
             </>
           ) : (
             <>
-              <Copy className="w-4 h-4" />
-              Copy Code
+              <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>Copy Code</span>
             </>
           )}
         </button>
       </div>
-      <pre className="p-4 overflow-x-auto text-sm text-slate-300 font-mono bg-slate-950/50">
-        <code>{code}</code>
+      <pre className="p-2 sm:p-3 md:p-4 overflow-x-auto text-xs sm:text-sm text-slate-300 font-mono bg-slate-950/50 whitespace-pre-wrap break-words max-h-[300px] sm:max-h-[400px] overflow-y-auto">
+        <code className="break-all">{code}</code>
       </pre>
     </div>
   );

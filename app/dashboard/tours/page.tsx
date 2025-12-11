@@ -14,7 +14,6 @@ export default function TourManagement() {
     const [tours, setTours] = useState<Tour[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Load tours from database
     const loadTours = async () => {
         if (!user?.id) return;
 
@@ -23,6 +22,7 @@ export default function TourManagement() {
 
         if (data) {
             setTours(data);
+            console.log(data);
         } else if (error) {
             console.error("Error loading tours:", error);
         }
@@ -31,6 +31,18 @@ export default function TourManagement() {
     };
 
     // Load tours when component mounts or user changes
+    useEffect(() => {
+        console.log("👤 Current user ID:", user?.id);
+        console.log("📋 Loaded tours:", tours);
+
+        if (tours.length > 0) {
+            tours.forEach((tour) => {
+                console.log(`🎯 Tour: "${tour.title}" - ID: ${tour.id}`);
+                console.log(`   Steps count: ${tour.tour_steps?.length || 0}`);
+            });
+        }
+    }, [tours, user]);
+
     useEffect(() => {
         if (user?.id) {
             loadTours();
@@ -87,7 +99,7 @@ export default function TourManagement() {
                 {/* Tours List */}
                 <div className="lg:col-span-1 space-y-4">
                     {tours.length === 0 ? (
-                        <Card className="bg-sidebar border-[#1e2943] p-6">
+                        <Card className="bg-sidebar/90! border-primary/40 hover:border-primary/90!p-6">
                             <p className="text-gray-400 text-center">
                                 No tours yet. Create your first tour!
                             </p>
@@ -95,10 +107,12 @@ export default function TourManagement() {
                     ) : (
                         tours.map((tour) => (
                             <TourCard
+                                onTourUpdated={loadTours}
                                 key={tour.id}
                                 selectedTour={selectedTour}
                                 tour={tour}
                                 setSelectedTour={setSelectedTour}
+                                userId={user?.id}
                             />
                         ))
                     )}
@@ -107,7 +121,7 @@ export default function TourManagement() {
                 {/* Tour Details Panel */}
                 <div className="lg:col-span-2">
                     {!selectedTour ? (
-                        <Card className="bg-sidebar/90! border-sidebar-border! h-full min-h-[400px] flex items-center justify-center">
+                        <Card className="bg-sidebar/90! border-primary/40 hover:border-primary/90! h-full min-h-[400px] flex items-center justify-center">
                             <CardContent>
                                 <p className="text-gray-400 text-center">
                                     Select a tour to view and edit its steps

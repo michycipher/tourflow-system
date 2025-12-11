@@ -15,7 +15,7 @@ export interface RecentTour {
 }
 
 export interface StepPerformance {
-  step_number: number;
+  step_order: number;
   completion_rate: number;
 }
 
@@ -100,11 +100,11 @@ export const dashboardService = {
       if (!tours || tours.length === 0) {
         // Return default 5 steps with sample data for demo
         return [
-          { step_number: 1, completion_rate: 95 },
-          { step_number: 2, completion_rate: 94 },
-          { step_number: 3, completion_rate: 94 },
-          { step_number: 4, completion_rate: 93 },
-          { step_number: 5, completion_rate: 75 },
+          { step_order: 1, completion_rate: 95 },
+          { step_order: 2, completion_rate: 94 },
+          { step_order: 3, completion_rate: 94 },
+          { step_order: 4, completion_rate: 93 },
+          { step_order: 5, completion_rate: 75 },
         ];
       }
 
@@ -112,9 +112,9 @@ export const dashboardService = {
 
       const { data, error } = await supabase
         .from('tour_steps')
-        .select('step_number, completion_rate')
+        .select('step_order, completion_rate')
         .in('tour_id', tourIds)
-        .order('step_number', { ascending: true });
+        .order('step_order', { ascending: true });
 
       if (error) throw error;
 
@@ -122,10 +122,10 @@ export const dashboardService = {
       const stepMap = new Map<number, number[]>();
 
       data?.forEach(step => {
-        if (!stepMap.has(step.step_number)) {
-          stepMap.set(step.step_number, []);
+        if (!stepMap.has(step.step_order)) {
+          stepMap.set(step.step_order, []);
         }
-        stepMap.get(step.step_number)?.push(step.completion_rate);
+        stepMap.get(step.step_order)?.push(step.completion_rate);
       });
 
       const averages: StepPerformance[] = [];
@@ -135,30 +135,29 @@ export const dashboardService = {
         stepMap.forEach((rates, stepNumber) => {
           const avg = rates.reduce((sum, rate) => sum + rate, 0) / rates.length;
           averages.push({ 
-            step_number: stepNumber, 
+            step_order: stepNumber, 
             completion_rate: Math.round(avg * 100) / 100 
           });
         });
         
-        return averages.sort((a, b) => a.step_number - b.step_number);
+        return averages.sort((a, b) => a.step_order - b.step_order);
       } else {
-        // Return sample data if no steps exist yet
         return [
-          { step_number: 1, completion_rate: 95 },
-          { step_number: 2, completion_rate: 94 },
-          { step_number: 3, completion_rate: 94 },
-          { step_number: 4, completion_rate: 93 },
-          { step_number: 5, completion_rate: 75 },
+          { step_order: 1, completion_rate: 95 },
+          { step_order: 2, completion_rate: 94 },
+          { step_order: 3, completion_rate: 94 },
+          { step_order: 4, completion_rate: 93 },
+          { step_order: 5, completion_rate: 75 },
         ];
       }
     } catch (error) {
       console.error('Error fetching average step performance:', error);
       return [
-        { step_number: 1, completion_rate: 95 },
-        { step_number: 2, completion_rate: 94 },
-        { step_number: 3, completion_rate: 94 },
-        { step_number: 4, completion_rate: 93 },
-        { step_number: 5, completion_rate: 75 },
+        { step_order: 1, completion_rate: 95 },
+        { step_order: 2, completion_rate: 94 },
+        { step_order: 3, completion_rate: 94 },
+        { step_order: 4, completion_rate: 93 },
+        { step_order: 5, completion_rate: 75 },
       ];
     }
   },
