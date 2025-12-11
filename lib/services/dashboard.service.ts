@@ -162,4 +162,108 @@ export const dashboardService = {
       ];
     }
   },
+
+ // Get average step performance from analytics data
+// async getAverageStepPerformance(userId: string): Promise<StepPerformance[]> {
+//   try {
+//     // First, get all tours for this user
+//     const { data: tours, error: toursError } = await supabase
+//       .from('tours')
+//       .select('id, total_steps')
+//       .eq('user_id', userId);
+
+//     console.log('Tours found:', tours);
+
+//     if (toursError) {
+//       console.error('Error fetching tours:', toursError);
+//       throw toursError;
+//     }
+
+//     if (!tours || tours.length === 0) {
+//       console.log('No tours found for user');
+//       return [];
+//     }
+
+//     const tourIds = tours.map(t => t.id);
+//     const maxSteps = Math.max(...tours.map(t => t.total_steps || 0));
+
+//     console.log('Tour IDs:', tourIds);
+//     console.log('Max steps across tours:', maxSteps);
+
+//     // Get all analytics events for these tours
+//     const { data: analytics, error: analyticsError } = await supabase
+//       .from('tour_analytics')
+//       .select('tour_id, session_id, type, metadata')
+//       .in('tour_id', tourIds)
+//       .in('type', ['step_completed', 'step_viewed']); // Track both completed and viewed
+
+//     console.log('Analytics data:', analytics);
+
+//     if (analyticsError) {
+//       console.error('Error fetching analytics:', analyticsError);
+//       throw analyticsError;
+//     }
+
+//     if (!analytics || analytics.length === 0) {
+//       console.log('No analytics data found');
+//       return [];
+//     }
+
+//     // Count unique sessions that started tours
+//     const uniqueSessions = new Set(
+//       analytics.map(event => event.session_id).filter(Boolean)
+//     );
+
+//     const totalSessions = uniqueSessions.size;
+
+//     console.log('Total unique sessions:', totalSessions);
+
+//     if (totalSessions === 0) {
+//       return [];
+//     }
+
+//     // Track which sessions completed/viewed each step
+//     // Using stepIndex + 1 to convert 0-based to 1-based (Step 1, Step 2, etc.)
+//     const stepCompletions = new Map<number, Set<string>>();
+
+//     analytics.forEach(event => {
+//       if (event.metadata && typeof event.metadata === 'object') {
+//         const stepIndex = event.metadata.stepIndex;
+//         const sessionId = event.session_id;
+
+//         if (typeof stepIndex === 'number' && sessionId) {
+//           const stepNumber = stepIndex + 1; // Convert 0-based to 1-based
+
+//           if (!stepCompletions.has(stepNumber)) {
+//             stepCompletions.set(stepNumber, new Set());
+//           }
+//           stepCompletions.get(stepNumber)?.add(sessionId);
+//         }
+//       }
+//     });
+
+//     console.log('Step completions map:', stepCompletions);
+
+//     // Calculate completion rate for each step
+//     const performance: StepPerformance[] = [];
+    
+//     for (let stepNum = 1; stepNum <= maxSteps; stepNum++) {
+//       const sessionsCompletedThisStep = stepCompletions.get(stepNum)?.size || 0;
+//       const completionRate = (sessionsCompletedThisStep / totalSessions) * 100;
+      
+//       performance.push({
+//         step_number: stepNum,
+//         completion_rate: Math.round(completionRate * 100) / 100
+//       });
+//     }
+
+//     console.log('Final performance data:', performance);
+
+//     return performance;
+
+//   } catch (error) {
+//     console.error('Error fetching average step performance:', error);
+//     return [];
+//   }
+// },
 };
