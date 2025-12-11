@@ -57,9 +57,10 @@ export default function TourManagement() {
     // Show loading state
     if (authLoading || loading) {
         return (
-            <div className="mx-auto text-white">
-                <div className="flex items-center justify-center min-h-[400px]">
-                    <p className="text-gray-400">Loading tours...</p>
+            <div className="flex items-center justify-center h-screen bg-[#110816]">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#800080] mx-auto"></div>
+                    <p className="mt-4 text-slate-400">Loading...</p>
                 </div>
             </div>
         );
