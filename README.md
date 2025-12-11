@@ -1,8 +1,7 @@
 # TourFlow System
-
 An embeddable onboarding/tour web application built with Next.js that allows website owners to create guided multi-step tours for their users. Create, customize, and deploy interactive product tours with ease.
 
-![TourFlow Banner](./public/banner.png) <!-- Add your banner image -->
+![TourFlow Banner](./public/banner.png)
 
 ## 🌟 Features
 
@@ -24,10 +23,10 @@ An embeddable onboarding/tour web application built with Next.js that allows web
 
 | Name | Role | GitHub | Focus Area |
 |------|------|--------|------------|
-| [Team Member 1] | Frontend Developer | [@username1](https://github.com/username1) | External Pages |
-| [Team Member 2] | Frontend Developer | [@username2](https://github.com/username2) | Dashboard |
-| [Team Member 3] | Frontend Developer | [@username3](https://github.com/username3) | Embeddable Widget |
-| [Team Member 4] | Frontend Developer | [@username4](https://github.com/username4) | Dashboard/External Pages |
+| [Team Member 1] | Frontend Developer | [@username1](https://github.com/michycipher) | Auth | Dashboard
+| BIGJESUS | Frontend Developer | [@username2](https://github.com/beejayofgod) | Dashboard |
+| PAGE | Frontend Developer | [@username3](https://github.com/lilbobb) | Embeddable Widget |
+| TecGirlNextDoor | Frontend Developer | [@username4](https://github.com/Mmesoma-Constance) | External Pages |
 
 ## 🏗️ Project Structure
 
@@ -96,7 +95,7 @@ tourflow-system/
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-org/tourflow-system.git
+git clone https://github.com/michycipher/tourflow-system
 cd tourflow-system
 ```
 
@@ -381,7 +380,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 - **Documentation**: [https://tourflow.vercel.app/docs](https://tourflow.vercel.app/docs)
-- **Issues**: [GitHub Issues](https://github.com/your-org/tourflow-system/issues)
 - **Email**: support@tourflow.com
 
 ## 🗺️ Roadmap
@@ -394,7 +392,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Multi-language support
 - [ ] Tour templates library
 - [ ] Integration with popular CMS platforms
-- [ ] Mobile app for tour management
+
 
 ---
 
