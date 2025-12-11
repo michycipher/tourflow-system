@@ -37,7 +37,7 @@ export interface AddStepDialogProps {
             Step,
             | "id"
             | "tour_id"
-            | "step_number"
+            | "step_order"
             | "completion_rate"
             | "created_at"
             | "updated_at"
