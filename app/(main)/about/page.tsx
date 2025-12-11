@@ -38,9 +38,9 @@ const About = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#0A101D] " />
-        <div className="container mx-auto px-4 md:px-0 relative z-10">
+      <section className="pt-24 pb-10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#0A101D]/95 " />
+        <div className="container mx-auto px-5 md:px-0 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -59,7 +59,7 @@ const About = () => {
 
       {/* Story */}
       <section className="py-24 bg-[#0A0F17]/98">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-5">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -122,7 +122,7 @@ const About = () => {
 
       {/* Values */}
       <section className="py-24 bg-[#0A0F17]">
-        <div className="container mx-auto px-4 md:px-0">
+        <div className="container mx-auto px-5 md:px-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -162,7 +162,7 @@ const About = () => {
 
       {/* Team */}
       <section className="py-24 bg-[#0A0F17]/99">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-5">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +175,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {team.map((member, index) => (
               <motion.div
                 key={member.name}
@@ -185,7 +185,7 @@ const About = () => {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-20 h-20 rounded-full bg-linear-to-br from-[#800080]/20 to-[#800080]/50 border border-[#800080]/20 flex items-center justify-center mx-auto mb-4">
+                <div className="w-20 h-20 rounded-full bg-linear-to-br from-[#800080]/20 to-[#800080]/80 border border-[#800080]/20 flex items-center justify-center mx-auto mb-4">
                   <span className="text-white font-bold text-xl ">
                     {member.avatar}
                   </span>

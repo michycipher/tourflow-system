@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-
+import { useState } from "react";
 import {
     HiOutlineArrowRight,
     HiOutlineSparkles,
@@ -10,17 +10,16 @@ import {
 } from "react-icons/hi2";
 
 import { Button } from "../ui/Button";
+import DemoTourModal from "./../DemoTourModal";
 
 const Hero = () => {
+    const [isDemoOpen, setIsDemoOpen] = useState(false);
+
     return (
         <div>
             {/* Hero Section */}
             <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden mt-20 w-full bg-[#080c1b]">
-                {/* Background Effects */}
-                {/* <div className="absolute inset-0 bg-[#0A101D]" /> */}
-                
-
-                <div className="container mx-auto relative z-10 text-white my-10 mt-20 ">
+                <div className="container mx-auto relative z-10 text-white my-10 mt-20 px-5 md:px-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -39,10 +38,10 @@ const Hero = () => {
                         </p>
 
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <Link href="/login">
+                            <Link href="auth/login">
                                 <Button
                                     size="lg"
-                                    className="bg-[#800080] text-white py-3 md:py-4 flex gap-3 items-center"
+                                    className="bg-[#800080] cursor-pointer text-white py-3 md:py-4 flex gap-3 items-center"
                                 >
                                     <span>Start Building Free</span>
                                     <HiOutlineArrowRight className="w-5 h-5 md:w-6 md:h-6" />
@@ -50,7 +49,8 @@ const Hero = () => {
                             </Link>
                             <Button
                                 size="lg"
-                                className="border-2 md:border-4 border-[#800080]
+                                onClick={() => setIsDemoOpen(true)}
+                                className="border-2 cursor-pointer md:border-4 border-[#800080]
                text-white py-3 md:py-4 flex gap-3 items-center"
                             >
                                 <HiOutlinePlay className="w-5 h-5 md:w-6 md:h-6" />
@@ -66,7 +66,7 @@ const Hero = () => {
                         transition={{ delay: 0.6, duration: 0.8 }}
                         className="mt-20 relative"
                     >
-                        <div className="max-w-3xl mx-auto bg-[#0A101D]/80 border border-border rounded-2xl shadow-2xl overflow-hidden">
+                        <div className="max-w-xl md:max-w-3xl mx-auto bg-[#0A101D]/80 border border-border rounded-2xl shadow-2xl overflow-hidden">
                             <div className="flex items-center gap-2 px-4 py-3 bg-secondary/40 border-b border-border">
                                 <div className="w-3 h-3 rounded-full bg-red-500/50" />
                                 <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
@@ -98,9 +98,9 @@ const Hero = () => {
                                 repeat: Infinity,
                                 ease: "easeInOut",
                             }}
-                            className="absolute -bottom-4 -right-4 md:right-20 lg:right-32 bg-[#0A101D] border border-border rounded-xl p-4 shadow-xl max-w-xs"
+                            className="absolute -bottom-4 -right-2 md:right-20 lg:right-32 bg-[#0A101D] border border-border rounded-xl p-4 shadow-xl max-w-xs"
                         >
-                            <div className="flex items-center gap-3 mb-2  z-10">
+                            <div className="flex items-center gap-3 mb-2 z-10">
                                 <div className="w-8 h-8 rounded-full bg-[#800080]/50 flex items-center justify-center">
                                     <span className="text-sm font-bold text-white">
                                         1
@@ -118,7 +118,8 @@ const Hero = () => {
                 </div>
             </section>
 
-            
+            {/* Demo Tour Modal */}
+            <DemoTourModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
         </div>
     );
 };

@@ -87,15 +87,15 @@ const Docs = () => {
     <div>
       {/* Hero */}
   
-        <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[#080c1b]" />
-        <div className="container mx-auto px-4 md:px-0 relative z-10">
+        <section className="pt-24 pb-10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[#0A101D]/95" />
+        <div className="container mx-auto px-5 md:px-0 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto"
           >
-             <h1 className="text-white text-4xl md:text-5xl font-bold my-4">
+             <h1 className="text-white text-4xl md:text-5xl font-bold my-4 mt-10">
               Developer <span className="text-[#800080]">Documentation</span> 
             </h1>
             <p className="text-lg text-white">
@@ -108,10 +108,10 @@ const Docs = () => {
       {/* Docs Sections */}
 
       <section className="py-12 bg-[#080c1b]/99">
-        <div className="container mx-auto px-4 md:px-0">
+        <div className="container mx-auto px-5 md:px-0">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Sidebar */}
-            <div className="lg:col-span-1">
+            <div className="hidden lg:flex lg:col-span-1">
               <div className="sticky top-24 space-y-2">
                 {sections.map((section) => (
                   <a
@@ -148,7 +148,7 @@ const Docs = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <p className="text-white">
+                  <p className="text-white/80">
                     Adding TourFlow to your website is simple. Just add the script tag
                     to your HTML and initialize it with your tour ID.
                   </p>
@@ -167,7 +167,7 @@ const Docs = () => {
                         )}
                       </Button>
                     </div>
-                    <pre className=" bg-secondary/4 border border-[#800080]/60 rounded-xl p-4 overflow-x-auto">
+                    <pre className=" bg-secondary/4 border border-[#800080]/60 rounded-xl p-4 pt-10 lg:pt-4 overflow-x-auto">
                       <code className="text-sm text-white/75">{installCode}</code>
                     </pre>
                   </div>
@@ -201,7 +201,7 @@ const Docs = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <p className="text-white">
+                  <p className="text-white/80">
                     TourFlow is highly customizable. You can change colors, positions,
                     and add callbacks to track user interactions.
                   </p>
@@ -266,7 +266,7 @@ const Docs = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <p className="text-white">
+                  <p className="text-white/80">
                     Use the TourFlow API to control tours programmatically. Perfect for
                     triggering tours based on user actions.
                   </p>
