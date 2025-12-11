@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { HiOutlineSparkles } from "react-icons/hi2";
+// import { HiOutlineSparkles } from "react-icons/hi2";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 
 export const Footer = () => {
@@ -11,9 +11,6 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#800080] flex items-center justify-center">
-                <HiOutlineSparkles className="w-5 h-5 text-white" />
-              </div>
               <span className="font-display font-bold text-xl">TourFlow</span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-md">

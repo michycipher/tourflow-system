@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-
+import { useState } from "react";
 import {
     HiOutlineArrowRight,
     HiOutlineSparkles,
@@ -10,17 +10,16 @@ import {
 } from "react-icons/hi2";
 
 import { Button } from "../ui/Button";
+import DemoTourModal from "./../DemoTourModal";
 
 const Hero = () => {
+    const [isDemoOpen, setIsDemoOpen] = useState(false);
+
     return (
         <div>
             {/* Hero Section */}
             <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden mt-20 w-full bg-[#080c1b]">
-                {/* Background Effects */}
-                {/* <div className="absolute inset-0 bg-[#0A101D]" /> */}
-                
-
-                <div className="container mx-auto relative z-10 text-white my-10 mt-20 px-5 md:px-0 ">
+                <div className="container mx-auto relative z-10 text-white my-10 mt-20 px-5 md:px-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -50,6 +49,7 @@ const Hero = () => {
                             </Link>
                             <Button
                                 size="lg"
+                                onClick={() => setIsDemoOpen(true)}
                                 className="border-2 cursor-pointer md:border-4 border-[#800080]
                text-white py-3 md:py-4 flex gap-3 items-center"
                             >
@@ -100,7 +100,7 @@ const Hero = () => {
                             }}
                             className="absolute -bottom-4 -right-2 md:right-20 lg:right-32 bg-[#0A101D] border border-border rounded-xl p-4 shadow-xl max-w-xs"
                         >
-                            <div className="flex items-center gap-3 mb-2  z-10">
+                            <div className="flex items-center gap-3 mb-2 z-10">
                                 <div className="w-8 h-8 rounded-full bg-[#800080]/50 flex items-center justify-center">
                                     <span className="text-sm font-bold text-white">
                                         1
@@ -118,7 +118,8 @@ const Hero = () => {
                 </div>
             </section>
 
-            
+            {/* Demo Tour Modal */}
+            <DemoTourModal isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
         </div>
     );
 };
