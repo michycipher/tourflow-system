@@ -32,6 +32,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
             | "id"
             | "tour_id"
             | "step_order"
+            | "step_order"
             | "completion_rate"
             | "created_at"
             | "updated_at"
@@ -69,6 +70,7 @@ const TourDetails = ({ selectedTour, onUpdateTour }: TourDetailsProps) => {
             Step,
             | "id"
             | "tour_id"
+            | "step_order"
             | "step_order"
             | "completion_rate"
             | "created_at"
