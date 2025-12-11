@@ -111,6 +111,7 @@ export default function CreateTourDialog({
 
     const handleSubmit = async () => {
         if (!validateForm()) {
+
             toast.error("Please fill in all required fields", {
                 description: "Check the form for validation errors",
             });
@@ -251,7 +252,7 @@ export default function CreateTourDialog({
                                     });
                                 }
                             }}
-                            className={`bg-[#1e2943] border-[#2a3654] text-white placeholder:text-gray-500 ${
+                            className={`bg-[#1e2943] border-primary! text-white placeholder:text-gray-500 ${
                                 errors.tourName ? "border-red-500" : ""
                             }`}
                         />
@@ -284,7 +285,7 @@ export default function CreateTourDialog({
                                     });
                                 }
                             }}
-                            className={`bg-[#1e2943] border-[#2a3654] text-white placeholder:text-gray-500 min-h-20 ${
+                            className={`bg-[#1e2943] border-primary! text-white placeholder:text-gray-500 min-h-20 ${
                                 errors.tourDescription ? "border-red-500" : ""
                             }`}
                         />
@@ -310,12 +311,20 @@ export default function CreateTourDialog({
                                 setTourStatus(value)
                             }
                         >
-                            <SelectTrigger className="bg-[#1e2943] border-[#2a3654] text-white">
-                                <SelectValue />
+                            <SelectTrigger className="bg-[#1e2943] border-primary! text-white">
+                                <SelectValue className="bg-sidebar! text-white" />
                             </SelectTrigger>
-                            <SelectContent className="bg-[#1e2943] border-[#2a3654] text-white">
-                                <SelectItem value="active">Active</SelectItem>
-                                <SelectItem value="inactive">
+                            <SelectContent className="bg-sidebar! border-[#2a3654] text-white">
+                                <SelectItem
+                                    value="active"
+                                    className="bg-sidebar! hover:text-white/50!"
+                                >
+                                    Active
+                                </SelectItem>
+                                <SelectItem
+                                    value="inactive"
+                                    className="bg-sidebar! hover:text-white/50!"
+                                >
                                     Inactive
                                 </SelectItem>
                             </SelectContent>
@@ -437,7 +446,7 @@ export default function CreateTourDialog({
                     <Button
                         type="button"
                         onClick={handleSubmit}
-                        disabled={validStepsCount < 5 || isSubmitting}
+                        disabled={isSubmitting}
                     >
                         {isSubmitting ? "Creating..." : "Create Tour"}
                     </Button>

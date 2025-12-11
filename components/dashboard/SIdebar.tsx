@@ -85,16 +85,16 @@ export default function TourFlowSidebar() {
     };
 
     return (
-        <Sidebar className="border-r border-slate-800 bg-sidebar static">
-            <SidebarHeader className="border-b border-slate-800 p-4">
+        <Sidebar className="border-r border-primary/80! bg-sidebar static">
+            <SidebarHeader className="border-b border-primary/80! p-4">
                 <div className="flex items-center gap-2">
                     <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#800080]">
                         <Map className="h-5 w-5 text-white" />
                     </div>
-                    <Link href='/'>
-                    <span className="text-lg font-semibold text-white">
-                        TourFlow
-                    </span>
+                    <Link href="/">
+                        <span className="text-lg font-semibold text-white">
+                            TourFlow
+                        </span>
                     </Link>
                 </div>
             </SidebarHeader>
@@ -113,7 +113,7 @@ export default function TourFlowSidebar() {
                                     className={`w-full justify-start gap-3 py-6 px-3 text-sm ${
                                         isActive
                                             ? "bg-primary! text-white!"
-                                            : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-200"
+                                            : "text-slate-400! hover:bg-slate-800/50! hover:text-slate-200!"
                                     }`}
                                 >
                                     <Link href={item.href}>
@@ -128,7 +128,7 @@ export default function TourFlowSidebar() {
             </SidebarContent>
 
             {/* FOOTER */}
-            <SidebarFooter className="border-t border-slate-800 p-3">
+            <SidebarFooter className="border-t border-primary/80! p-3">
                 {/* USER CARD */}
                 <div className="mb-3 flex items-center gap-3 rounded-lg bg-slate-800/50 p-3">
                     <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#800080]">
