@@ -23,7 +23,7 @@ An embeddable onboarding/tour web application built with Next.js that allows web
 
 | Name | Role | GitHub | Focus Area |
 |------|------|--------|------------|
-| [Team Member 1] | Frontend Developer | [@username1](https://github.com/michycipher) | Auth | Dashboard
+| MICHY | Frontend Developer | [@username1](https://github.com/michycipher) | Auth | Dashboard | Database
 | BIGJESUS | Frontend Developer | [@username2](https://github.com/beejayofgod) | Dashboard |
 | PAGE | Frontend Developer | [@username3](https://github.com/lilbobb) | Embeddable Widget |
 | TecGirlNextDoor | Frontend Developer | [@username4](https://github.com/Mmesoma-Constance) | External Pages |
@@ -396,6 +396,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ by the TourFlow Team** | HNG Internship Stage 8 Project
+**Built by the TourFlow Team** | HNG Internship Stage 8 Project
 
 **⭐ Star this repo if you find it helpful!**
