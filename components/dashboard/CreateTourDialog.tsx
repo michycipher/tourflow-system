@@ -131,7 +131,7 @@ export default function CreateTourDialog({
             const { error } = await createTour(userId, {
                 title: tourName.trim(),
                 description: tourDescription.trim(),
-                status: tourStatus.toLowerCase(),
+                status: tourStatus.toLowerCase() as "active" | "inactive",
                 steps: validSteps,
             });
 

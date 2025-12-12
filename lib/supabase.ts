@@ -488,6 +488,11 @@ export async function fixMissingOrderColumns(tourId: number, userId: string) {
         if (stepsError) throw stepsError;
 
         // Fix each step
+if (!steps || !Array.isArray(steps)) {
+    console.error('Steps is null or not an array');
+    return { success: false, error: 'No steps found or invalid steps data' };
+}
+    
         for (let i = 0; i < steps.length; i++) {
             const step = steps[i];
             const orderValue = i + 1;
