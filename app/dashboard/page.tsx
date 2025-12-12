@@ -4,7 +4,12 @@ import { useRouter } from "next/navigation";
 import { CheckCircle, Clock, Users, Eye, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useAuthStore } from "@/lib/store/authStore";
-import { dashboardService, DashboardStats, RecentTour, StepPerformance } from "@/lib/services/dashboard.service";
+import {
+    dashboardService,
+    DashboardStats,
+    RecentTour,
+    StepPerformance,
+} from "@/lib/services/dashboard.service";
 
 export default function DashboardPage() {
     const { user, loading, checkAuth } = useAuthStore();
@@ -18,7 +23,9 @@ export default function DashboardPage() {
         totalUsers: 0,
     });
     const [recentTours, setRecentTours] = useState<RecentTour[]>([]);
-    const [stepPerformance, setStepPerformance] = useState<StepPerformance[]>([]);
+    const [stepPerformance, setStepPerformance] = useState<StepPerformance[]>(
+        []
+    );
     const [dataLoading, setDataLoading] = useState(true);
 
     // handle client-side mounting
@@ -44,17 +51,18 @@ export default function DashboardPage() {
 
             setDataLoading(true);
             try {
-                const [statsData, toursData, performanceData] = await Promise.all([
-                    dashboardService.getDashboardStats(user.id),
-                    dashboardService.getRecentTours(user.id, 3),
-                    dashboardService.getAverageStepPerformance(user.id),
-                ]);
+                const [statsData, toursData, performanceData] =
+                    await Promise.all([
+                        dashboardService.getDashboardStats(user.id),
+                        dashboardService.getRecentTours(user.id, 3),
+                        dashboardService.getAverageStepPerformance(user.id),
+                    ]);
 
                 setStats(statsData);
                 setRecentTours(toursData);
                 setStepPerformance(performanceData);
             } catch (error) {
-                console.error('Error fetching dashboard data:', error);
+                console.error("Error fetching dashboard data:", error);
             } finally {
                 setDataLoading(false);
             }
@@ -69,7 +77,7 @@ export default function DashboardPage() {
         if (user?.user_metadata?.full_name) {
             return user.user_metadata.full_name;
         }
-        return user?.email?.split('@')[0] || 'user';
+        return user?.email?.split("@")[0] || "user";
     };
 
     if (!mounted || loading) {
@@ -102,7 +110,7 @@ export default function DashboardPage() {
             {/* Metrics Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {/* Total Tours */}
-                <div className="bg-sidebar rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <Eye className="w-5 h-5 text-cyan-500" />
@@ -123,7 +131,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Total Steps */}
-                <div className="bg-sidebar rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <Clock className="w-5 h-5 text-cyan-500" />
@@ -143,7 +151,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Active Tours */}
-                <div className="bg-sidebar rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <CheckCircle className="w-5 h-5 text-cyan-500" />
@@ -163,7 +171,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Total Users */}
-                <div className="bg-sidebar rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <div className="flex items-center justify-between mb-4">
                         <div className="p-2 bg-cyan-500/10 rounded-lg">
                             <Users className="w-5 h-5 text-cyan-500" />
@@ -188,14 +196,14 @@ export default function DashboardPage() {
             {/* Bottom Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Recent Tours */}
-                <div className="bg-sidebar rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-xl font-semibold text-white">
                             Recent Tours
                         </h2>
                         <Link
                             href="/dashboard/tours"
-                            className="text-cyan-500 hover:text-cyan-400 text-sm flex items-center"
+                            className="text-white  hover:underline text-sm flex items-center"
                         >
                             View All
                             <ArrowRight className="ml-1 w-4 h-4" />
@@ -245,9 +253,12 @@ export default function DashboardPage() {
                         </div>
                     ) : (
                         <div className="text-center py-8 text-slate-400">
-                            <p className="mb-4">No tours yet. Create your first tour to get started!</p>
-                            <Link 
-                                href="/dashboard/tours" 
+                            <p className="mb-4">
+                                No tours yet. Create your first tour to get
+                                started!
+                            </p>
+                            <Link
+                                href="/dashboard/tours"
                                 className="inline-block px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors"
                             >
                                 Create Tour
@@ -257,7 +268,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Step Performance */}
-                <div className="bg-sidebar rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <h2 className="text-xl font-semibold text-white mb-6">
                         Average Step Performance
                     </h2>
@@ -279,7 +290,9 @@ export default function DashboardPage() {
                             {stepPerformance.map((step) => (
                                 <div key={step.step_order}>
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-slate-300 text-sm">Step {step.step_order}</span>
+                                        <span className="text-slate-300 text-sm">
+                                            Step {step.step_order}
+                                        </span>
                                         <span className="text-slate-300 text-sm font-medium">
                                             {step.completion_rate.toFixed(0)}%
                                         </span>
