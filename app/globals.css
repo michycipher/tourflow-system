@@ -163,7 +163,7 @@
   }
 
    .sidebar-card {
-    @apply bg-sidebar! cursor-pointer transition-all border p-6 rounded-lg! border-primary/40! hover:border-primary/90!;
+    @apply bg-sidebar! cursor-pointer transition-all border p-6! rounded-lg! border-primary/40! hover:border-primary/90!;
   }
 }
 
