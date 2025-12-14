@@ -1,4 +1,10 @@
 import { createClient } from "@supabase/supabase-js";
+import {
+    CreateStepInput,
+    CreateTourInput,
+    UpdateStepInput,
+    UpdateTourInput,
+} from "@/types/tour";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
@@ -17,19 +23,17 @@ export async function signOut() {
     return { error };
 }
 
-
-
-import {
-    CreateStepInput,
-    CreateTourInput,
-    UpdateStepInput,
-    UpdateTourInput,
-} from "@/types/tour";
-
+// CREATE - Add a new tour with steps
 // CREATE - Add a new tour with steps
 export async function createTour(userId: string, tourData: CreateTourInput) {
     try {
-        // First, create the tour
+        // Use lowercase "active" or "inactive" as required by constraint
+        const tourStatus = tourData.status?.toLowerCase() || "inactive";
+        
+        // Ensure it's only "active" or "inactive" (not "published")
+        const normalizedStatus = tourStatus === "active" ? "active" : "inactive";
+        const isActive = normalizedStatus === "active";
+
         const { data: tour, error: tourError } = await supabase
             .from("tours")
             .insert([
@@ -37,8 +41,9 @@ export async function createTour(userId: string, tourData: CreateTourInput) {
                     user_id: userId,
                     title: tourData.title,
                     description: tourData.description,
-                    status: tourData.status || "Inactive",
+                    status: normalizedStatus, // MUST be "active" or "inactive"
                     total_steps: tourData.steps?.length || 0,
+                    is_active: isActive,
                 },
             ])
             .select()
@@ -51,9 +56,16 @@ export async function createTour(userId: string, tourData: CreateTourInput) {
             const stepsToInsert = tourData.steps.map((step, index) => ({
                 tour_id: tour.id,
                 step_order: index + 1,
+                order_index: index + 1,
+                "order": index + 1,
                 title: step.title,
                 description: step.description,
                 completion_rate: 0,
+                status: "published", // tour_steps CAN use "published"
+                is_published: true,
+                published: true,
+                is_active: true,
+                active: true,
             }));
 
             const { error: stepsError } = await supabase
@@ -61,7 +73,6 @@ export async function createTour(userId: string, tourData: CreateTourInput) {
                 .insert(stepsToInsert);
 
             if (stepsError) {
-                // Rollback: delete the tour if steps creation fails
                 await supabase.from("tours").delete().eq("id", tour.id);
                 throw stepsError;
             }
@@ -73,7 +84,6 @@ export async function createTour(userId: string, tourData: CreateTourInput) {
         return { data: null, error: error.message };
     }
 }
-
 // READ - Get all tours for a user (without steps)
 export async function getUserTours(userId: string) {
     try {
@@ -191,10 +201,12 @@ export async function updateTourStatus(
     status: "active" | "inactive"
 ) {
     try {
+        // Status must be lowercase "active" or "inactive"
         const { data, error } = await supabase
             .from("tours")
             .update({
-                status,
+                status: status,
+                is_active: status === "active",
                 updated_at: new Date().toISOString(),
             })
             .eq("id", tourId)
@@ -250,9 +262,16 @@ export async function addStepToTour(
                 {
                     tour_id: tourId,
                     step_order: nextStepNumber,
+                    order_index: nextStepNumber,
+                    "order": nextStepNumber,
                     title: stepData.title,
                     description: stepData.description,
                     completion_rate: 0,
+                    status: "published",
+                    is_published: true,
+                    published: true,
+                    is_active: true,
+                    active: true,
                 },
             ])
             .select()
@@ -372,7 +391,12 @@ export async function deleteStep(
             for (let i = 0; i < remainingSteps.length; i++) {
                 await supabase
                     .from("tour_steps")
-                    .update({ step_order: i + 1 })
+                    .update({ 
+                        step_order: i + 1,
+                        order_index: i + 1,
+                        "order": i + 1,
+                        updated_at: new Date().toISOString()
+                    })
                     .eq("id", remainingSteps[i].id);
             }
         }
@@ -407,6 +431,8 @@ export async function reorderSteps(
                 .from("tour_steps")
                 .update({
                     step_order: i + 1,
+                    order_index: i + 1,
+                    "order": i + 1,
                     updated_at: new Date().toISOString(),
                 })
                 .eq("id", stepIds[i])
@@ -441,5 +467,55 @@ export async function updateStepCompletionRate(
     } catch (error: any) {
         console.error("Error updating completion rate:", error);
         return { data: null, error: error.message };
+    }
+}
+
+// UPDATE - Fix existing steps that are missing order columns
+export async function fixMissingOrderColumns(tourId: number, userId: string) {
+    try {
+        // Verify tour ownership
+        const { error: tourError } = await supabase
+            .from("tours")
+            .select("id")
+            .eq("id", tourId)
+            .eq("user_id", userId)
+            .single();
+
+        if (tourError) throw new Error("Tour not found or unauthorized");
+
+        // Get all steps for this tour
+        const { data: steps, error: stepsError } = await getTourSteps(tourId);
+        if (stepsError) throw stepsError;
+
+        // Fix each step
+if (!steps || !Array.isArray(steps)) {
+    console.error('Steps is null or not an array');
+    return { success: false, error: 'No steps found or invalid steps data' };
+}
+    
+        for (let i = 0; i < steps.length; i++) {
+            const step = steps[i];
+            const orderValue = i + 1;
+            
+            await supabase
+                .from("tour_steps")
+                .update({
+                    step_order: orderValue,
+                    order_index: orderValue,
+                    "order": orderValue,
+                    status: step.status === "active" ? "published" : step.status,
+                    is_published: step.is_published ?? true,
+                    published: step.published ?? true,
+                    is_active: step.is_active ?? true,
+                    active: step.active ?? true,
+                    updated_at: new Date().toISOString(),
+                })
+                .eq("id", step.id);
+        }
+
+        return { success: true, error: null };
+    } catch (error: any) {
+        console.error("Error fixing order columns:", error);
+        return { success: false, error: error.message };
     }
 }

@@ -24,11 +24,13 @@ declare global {
         position?: string;
         supabaseUrl?: string;
         supabaseKey?: string;
+        steps?: any[]; // ← Add this
       }) => void;
       destroy?: () => void;
       start?: () => void;
     };
     __TOURFLOW_DISABLE_AUTOINIT?: boolean;
+    supabase?: any; // For Supabase client
   }
 }
 
@@ -41,6 +43,41 @@ export default function WidgetScript({
 }: WidgetScriptProps) {
   const loaded = useRef(false);
 
+  // Function to fetch steps from Supabase
+  const fetchTourSteps = async (): Promise<any[]> => {
+    try {
+      const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      
+      if (!SUPABASE_URL || !SUPABASE_KEY) {
+        console.error("Missing Supabase credentials");
+        return [];
+      }
+
+      // Create Supabase client
+      const { createClient } = await import("@supabase/supabase-js");
+      const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      // Fetch steps for this tour
+      const { data, error } = await supabase
+        .from("tour_steps")
+        .select("*")
+        .eq("tour_id", tourId)
+        .order("order", { ascending: true });
+
+      if (error) {
+        console.error("Error fetching steps:", error);
+        return [];
+      }
+
+      console.log(`✅ Fetched ${data?.length || 0} steps for tour: ${tourId}`);
+      return data || [];
+    } catch (error) {
+      console.error("Failed to fetch steps:", error);
+      return [];
+    }
+  };
+
   useEffect(() => {
     if (loaded.current) return;
 
@@ -48,6 +85,7 @@ export default function WidgetScript({
     const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
     if (!SUPABASE_URL || !SUPABASE_KEY) {
+      console.error("Missing Supabase environment variables");
       return;
     }
 
@@ -130,9 +168,10 @@ export default function WidgetScript({
         document.body.appendChild(script);
       });
 
-    const initWidget = () => {
+    const initWidget = async () => { // ← Make this async
       
       if (!window.TourFlow) {
+        console.error("TourFlow widget not loaded");
         return;
       }
 
@@ -141,6 +180,12 @@ export default function WidgetScript({
       }
 
       try {
+        // 1. First, fetch steps from Supabase
+        const steps = await fetchTourSteps();
+        
+        console.log(`Initializing widget with ${steps.length} steps for tour: ${tourId}`);
+
+        // 2. Then initialize widget WITH the fetched steps
         const config = {
           tour_id: tourId,
           api_key: apiKey,
@@ -148,10 +193,10 @@ export default function WidgetScript({
           position: position,
           supabaseUrl: SUPABASE_URL,
           supabaseKey: SUPABASE_KEY,
+          steps: steps, // ← CRITICAL: Pass fetched steps!
         };
         
         window.TourFlow.mountWidget(config);
-
 
         const tourFlowWithStart = window.TourFlow as typeof window.TourFlow & {
           start?: () => void;
@@ -161,6 +206,7 @@ export default function WidgetScript({
           tourFlowWithStart.start();
         }
       } catch (err) {
+        console.error("Error initializing widget:", err);
       }
     };
 
@@ -171,9 +217,10 @@ export default function WidgetScript({
         ensureStyles();
         await ensureReact();
         await ensureWidget();
-        initWidget();
+        await initWidget(); // ← Await the async init
         
       } catch (error) {
+        console.error("Failed to load widget:", error);
       }
     };
 
@@ -185,6 +232,7 @@ export default function WidgetScript({
         try {
           window.TourFlow.destroy();
         } catch (err) {
+          console.error("Error destroying widget:", err);
         }
       }
       const widgetContainer = document.getElementById('__tourflow_widget_root');

@@ -74,7 +74,10 @@ export default function AnalyticsPage() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     {[1, 2, 3].map((i) => (
-                        <div key={i} className="bg-slate-900 rounded-lg p-6 border border-slate-800 animate-pulse">
+                        <div
+                            key={i}
+                            className="bg-slate-900 rounded-lg p-6 border border-slate-800 animate-pulse"
+                        >
                             <div className="h-4 w-24 bg-slate-700 rounded mb-2"></div>
                             <div className="h-10 w-32 bg-slate-700 rounded"></div>
                         </div>
@@ -99,7 +102,7 @@ export default function AnalyticsPage() {
             {/* Top Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 {/* Total Views */}
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <p className="text-slate-400 text-sm mb-2">Total Views</p>
                     <p className="text-4xl font-bold text-purple-400">
                         {metrics.totalViews.toLocaleString()}
@@ -107,7 +110,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Completion Rate */}
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <p className="text-slate-400 text-sm mb-2">
                         Completion Rate
                     </p>
@@ -117,7 +120,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Avg Time Spent */}
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <p className="text-slate-400 text-sm mb-2">
                         Avg. Time Spent
                     </p>
@@ -130,7 +133,7 @@ export default function AnalyticsPage() {
             {/* Charts Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 {/* Active Users*/}
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <h2 className="text-xl font-semibold text-white mb-6">
                         Active Users (Last 7 Days)
                     </h2>
@@ -175,7 +178,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Step Performance */}
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <h2 className="text-xl font-semibold text-white mb-6">
                         Step Performance
                     </h2>
@@ -221,17 +224,20 @@ export default function AnalyticsPage() {
             {/* Bottom Row */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Tour Status */}
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <h2 className="text-xl font-semibold text-white mb-6">
                         Tour Status
                     </h2>
-                    {tourStatusData.length > 0 && tourStatusData.some(d => d.value > 0) ? (
+                    {tourStatusData.length > 0 &&
+                    tourStatusData.some((d) => d.value > 0) ? (
                         <>
                             <div className="flex items-center justify-center">
                                 <ResponsiveContainer width="100%" height={250}>
                                     <PieChart>
                                         <Pie
-                                            data={tourStatusData.filter(d => d.value > 0)}
+                                            data={tourStatusData.filter(
+                                                (d) => d.value > 0
+                                            )}
                                             cx="50%"
                                             cy="50%"
                                             innerRadius={80}
@@ -239,30 +245,39 @@ export default function AnalyticsPage() {
                                             paddingAngle={5}
                                             dataKey="value"
                                         >
-                                            {tourStatusData.filter(d => d.value > 0).map((entry, index) => (
-                                                <Cell
-                                                    key={`cell-${index}`}
-                                                    fill={entry.color}
-                                                />
-                                            ))}
+                                            {tourStatusData
+                                                .filter((d) => d.value > 0)
+                                                .map((entry, index) => (
+                                                    <Cell
+                                                        key={`cell-${index}`}
+                                                        fill={entry.color}
+                                                    />
+                                                ))}
                                         </Pie>
                                     </PieChart>
                                 </ResponsiveContainer>
                             </div>
                             <div className="flex items-center justify-center gap-6 mt-4">
-                                {tourStatusData.map((item, index) => (
-                                    item.value > 0 && (
-                                        <div key={index} className="flex items-center gap-2">
+                                {tourStatusData.map(
+                                    (item, index) =>
+                                        item.value > 0 && (
                                             <div
-                                                className="w-3 h-3 rounded-full"
-                                                style={{ backgroundColor: item.color }}
-                                            ></div>
-                                            <span className="text-slate-300 text-sm capitalize">
-                                                {item.name}: {item.value}
-                                            </span>
-                                        </div>
-                                    )
-                                ))}
+                                                key={index}
+                                                className="flex items-center gap-2"
+                                            >
+                                                <div
+                                                    className="w-3 h-3 rounded-full"
+                                                    style={{
+                                                        backgroundColor:
+                                                            item.color,
+                                                    }}
+                                                ></div>
+                                                <span className="text-slate-300 text-sm capitalize">
+                                                    {item.name}: {item.value}
+                                                </span>
+                                            </div>
+                                        )
+                                )}
                             </div>
                         </>
                     ) : (
@@ -273,7 +288,7 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Step Skip Rates */}
-                <div className="bg-slate-900 rounded-lg p-6 border border-slate-800">
+                <div className="sidebar-card">
                     <h2 className="text-xl font-semibold text-white mb-6">
                         Step Skip Rates
                     </h2>
@@ -292,7 +307,12 @@ export default function AnalyticsPage() {
                                     <div className="w-full bg-slate-800 rounded-full h-2">
                                         <div
                                             className="bg-purple-500/60 h-2 rounded-full transition-all"
-                                            style={{ width: `${Math.min(item.rate, 100)}%` }}
+                                            style={{
+                                                width: `${Math.min(
+                                                    item.rate,
+                                                    100
+                                                )}%`,
+                                            }}
                                         ></div>
                                     </div>
                                 </div>

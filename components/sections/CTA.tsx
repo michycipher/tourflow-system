@@ -9,7 +9,7 @@ import { HiOutlineArrowRight } from "react-icons/hi2";
 const CTA: React.FC = () => {
     return (
         <section className="py-24 bg-[#0A0F17] text-white">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-5">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -23,10 +23,10 @@ const CTA: React.FC = () => {
                         Join thousands of teams using TourFlow to create better
                         user experiences.
                     </p>
-                    <Link href="/login">
+                    <Link href="auth/login">
                         <Button
                             size="md"
-                            className="bg-[#800080] text-white py-3 md:py-4 flex gap-3 mx-auto"
+                            className="bg-[#800080] cursor-pointer text-white py-3 md:py-4 flex gap-3 mx-auto items-center"
                         >
                             <span> Get Started Free</span>{" "}
                             <HiOutlineArrowRight className="w-5 h-5" />

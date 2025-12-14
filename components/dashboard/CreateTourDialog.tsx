@@ -42,8 +42,8 @@ export default function CreateTourDialog({
     const [open, setOpen] = useState(false);
     const [tourName, setTourName] = useState("");
     const [tourDescription, setTourDescription] = useState("");
-    const [tourStatus, setTourStatus] = useState<"active" | "inactive">(
-        "inactive"
+    const [tourStatus, setTourStatus] = useState<"Active" | "Inactive">(
+        "Inactive"
     );
     const [steps, setSteps] = useState<StepInput[]>([
         { title: "", description: "" },
@@ -131,7 +131,7 @@ export default function CreateTourDialog({
             const { error } = await createTour(userId, {
                 title: tourName.trim(),
                 description: tourDescription.trim(),
-                status: tourStatus,
+                status: tourStatus.toLowerCase() as "active" | "inactive",
                 steps: validSteps,
             });
 
@@ -146,7 +146,7 @@ export default function CreateTourDialog({
             // Reset form
             setTourName("");
             setTourDescription("");
-            setTourStatus("inactive");
+            setTourStatus("Inactive");
             setSteps([{ title: "", description: "" }]);
             setErrors({});
             setOpen(false);
@@ -179,7 +179,7 @@ export default function CreateTourDialog({
 
         setTourName("");
         setTourDescription("");
-        setTourStatus("inactive");
+        setTourStatus("Inactive");
         setSteps([{ title: "", description: "" }]);
         setErrors({});
         setOpen(false);
@@ -307,7 +307,7 @@ export default function CreateTourDialog({
                         </Label>
                         <Select
                             value={tourStatus}
-                            onValueChange={(value: "active" | "inactive") =>
+                            onValueChange={(value: "Active" | "Inactive") =>
                                 setTourStatus(value)
                             }
                         >
@@ -316,13 +316,13 @@ export default function CreateTourDialog({
                             </SelectTrigger>
                             <SelectContent className="bg-sidebar! border-[#2a3654] text-white">
                                 <SelectItem
-                                    value="active"
+                                    value="Active"
                                     className="bg-sidebar! hover:text-white/50!"
                                 >
                                     Active
                                 </SelectItem>
                                 <SelectItem
-                                    value="inactive"
+                                    value="Inactive"
                                     className="bg-sidebar! hover:text-white/50!"
                                 >
                                     Inactive
